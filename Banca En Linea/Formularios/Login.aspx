@@ -2,54 +2,29 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
-    <main>
-        <section class="row" aria-labelledby="aspnetTitle">
-            <h1 id="aspnetTitle">ASP.NET</h1>
-            <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-            <p><a href="http://www.asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
-        </section>
+    <main class="d-flex justify-content-center align-items-center vh-100">
 
-        <div class="row">
-            <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-                <h2 id="gettingStartedTitle">Getting started</h2>
-
-
-
-
-                <a href="file:///c:\users\tacho\source\repos\banca%20en%20linea\banca%20en%20linea\formularios\Login.aspx.designer.cs">file:///c:\users\tacho\source\repos\banca en linea\banca en linea\formularios\Login.aspx.designer.cs</a>
-                <a href="file:///c:\users\tacho\source\repos\banca%20en%20linea\banca%20en%20linea\formularios\Login.aspx.designer.csfile:///c:\users\tacho\source\repos\banca%20en%20linea\banca%20en%20linea\formularios\Login.aspx.cs">file:///c:\users\tacho\source\repos\banca en linea\banca en linea\formularios\Login.aspx.designer.csfile:///c:\users\tacho\source\repos\banca en linea\banca en linea\formularios\Login.aspx.cs</a>
-                <a href="file:///c:\users\tacho\source\repos\banca%20en%20linea\banca%20en%20linea\formularios\Login.aspx.designer.csfile:///c:\users\tacho\source\repos\banca%20en%20linea\banca%20en%20linea\formularios\Login.aspx.csfile:///c:\users\tacho\source\repos\banca%20en%20line">file:///c:\users\tacho\source\repos\banca en linea\banca en linea\formularios\Login.aspx.designer.csfile:///c:\users\tacho\source\repos\banca en linea\banca en linea\formularios\Login.aspx.csfile:///c:\users\tacho\source\repos\banca en linea\banca en linea\formularios\Login.aspx</a>
-
-
-
-
-
-                <p>
-                    ASP.NET Web Forms lets you build dynamic websites using a familiar drag-and-drop, event-driven model.
-                A design surface and hundreds of controls and components let you rapidly build sophisticated, powerful UI-driven sites with data access.
-                </p>
-                <p>
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301948">Learn more &raquo;</a>
-                </p>
+        <div class="container text-center">
+            <section aria-labelledby="aspnetTitle">
+                <h1 id="aspnetTitle">Bienvenido a Easy Pay</h1>
             </section>
-            <section class="col-md-4" aria-labelledby="librariesTitle">
-                <h2 id="librariesTitle">Get more libraries</h2>
-                <p>
-                    NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.
-                </p>
-                <p>
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301949">Learn more &raquo;</a>
-                </p>
-            </section>
-            <section class="col-md-4" aria-labelledby="hostingTitle">
-                <h2 id="hostingTitle">Web Hosting</h2>
-                <p>
-                    You can easily find a web hosting company that offers the right mix of features and price for your applications.
-                </p>
-                <p>
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301950">Learn more &raquo;</a>
-                </p>
-            </section>
+            <div class="card text-center mb-3 mx-auto" style="width: 18rem;">
+                <h5 class="card-header">Iniciar sesión</h5>
+                <div class="card-body">
+                    <img src="..." class="rounded mb-3" alt="...">
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="txtUsuario" placeholder="Usuario o Correo">
+                        <label for="floatingInput">Usuario o Correo</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="password" class="form-control" id="txtContrasena" placeholder="Contraseña">
+                        <label for="floatingPassword">Contraseña</label>
+                    </div>
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                        <button class="btnlogin" type="button">Iniciar Sesión</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
