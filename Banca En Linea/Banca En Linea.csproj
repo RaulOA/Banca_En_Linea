@@ -118,9 +118,10 @@
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
-    <Content Include="Formularios\Principal.aspx" />
     <Content Include="Formularios\Register.aspx" />
     <Content Include="Formularios\Login.aspx" />
+    <Content Include="Formularios\ResetPass.aspx" />
+    <Content Include="Formularios\Inicio.aspx" />
     <Content Include="Formularios\WebForm1.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -194,13 +195,6 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\Principal.aspx.cs">
-      <DependentUpon>Principal.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Formularios\Principal.aspx.designer.cs">
-      <DependentUpon>Principal.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Formularios\Register.aspx.cs">
       <DependentUpon>Register.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -214,6 +208,20 @@
     </Compile>
     <Compile Include="Formularios\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\ResetPass.aspx.cs">
+      <DependentUpon>ResetPass.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Formularios\ResetPass.aspx.designer.cs">
+      <DependentUpon>ResetPass.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Inicio.aspx.cs">
+      <DependentUpon>Inicio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Formularios\Inicio.aspx.designer.cs">
+      <DependentUpon>Inicio.aspx</DependentUpon>
     </Compile>
     <Compile Include="Formularios\WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>

@@ -7,11 +7,11 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace Banca_En_Linea
+namespace Banca_En_Linea.Formularios
 {
 
 
-    public partial class _Principal
+    public partial class Inicio
     {
     }
 }
