@@ -118,6 +118,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
+    <Content Include="Formularios\Profile.aspx" />
     <Content Include="Formularios\Register.aspx" />
     <Content Include="Formularios\Login.aspx" />
     <Content Include="Formularios\ResetPass.aspx" />
@@ -194,6 +195,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Profile.aspx.cs">
+      <DependentUpon>Profile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Formularios\Profile.aspx.designer.cs">
+      <DependentUpon>Profile.aspx</DependentUpon>
     </Compile>
     <Compile Include="Formularios\Register.aspx.cs">
       <DependentUpon>Register.aspx</DependentUpon>
