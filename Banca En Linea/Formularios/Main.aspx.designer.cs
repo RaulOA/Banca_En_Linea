@@ -11,7 +11,7 @@ namespace Banca_En_Linea
 {
 
 
-    public partial class _Default
+    public partial class _Main
     {
     }
 }

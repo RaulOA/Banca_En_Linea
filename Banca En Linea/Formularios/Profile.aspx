@@ -4,10 +4,9 @@
     <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://unpkg.com/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-        <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 
     <main>
-        <!-- Profile 1 - Bootstrap Brain Component -->
         <section class="bg-light py-3 py-md-5 py-xl-8">
 
             <div class="container">
@@ -41,7 +40,7 @@
                                                     <span class="bii bi-geo-alt-fill me-2"></span>
                                                     Ubicación
                                                 </h6>
-                                                <span> </span>
+                                                <span></span>
                                             </li>
                                         </ul>
                                     </div>
@@ -52,159 +51,147 @@
                     <div class="col-12 col-lg-8 col-xl-9">
                         <div class="card widget-card border-light shadow-sm">
                             <div class="card-body p-4">
-                                <ul class="nav nav-tabs" id="profileTab" role="tablist">
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview-tab-pane" type="button" role="tab" aria-controls="overview-tab-pane" aria-selected="true">Información</button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Editar perfil</button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="password-tab" data-bs-toggle="tab" data-bs-target="#password-tab-pane" type="button" role="tab" aria-controls="password-tab-pane" aria-selected="false">Editar contraseña</button>
-                                    </li>
-                                </ul>
                                 <div class="tab-content pt-4" id="profileTabContent">
-                                    <div class="tab-pane fade show active" id="overview-tab-pane" role="tabpanel" aria-labelledby="overview-tab" tabindex="0">
-                                        <h5 class="mb-3">Cuenta</h5>
-                                        <div class="row g-0">
-                                            <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                                                <div class="p-2">Nombre</div>
+                                    <div class="tab-pane fade show active" id="overview-tab-pane" role="tabpanel">
+                                        <div class="container-fluid">
+                                            <div class="row gy-4">
+                                                <!-- Transferencias -->
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="card widget-card border-light shadow-sm">
+                                                        <div class="card-body p-4 d-flex justify-content-between align-items-center">
+                                                            <div>
+                                                                <h5 class="card-title mb-3">Transferencias</h5>
+                                                                <h4 class="card-subtitle text-body-secondary m-0">$0</h4>
+                                                            </div>
+                                                            <div class="bg-info text-white rounded-circle p-3 d-flex align-items-center justify-content-center">
+                                                                <i class="bi bi-truck fs-4"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Cartera -->
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="card widget-card border-light shadow-sm">
+                                                        <div class="card-body p-4 d-flex justify-content-between align-items-center">
+                                                            <div>
+                                                                <h5 class="card-title mb-3">Cartera</h5>
+                                                                <h4 class="card-subtitle text-body-secondary m-0">$0</h4>
+                                                            </div>
+                                                            <div class="bg-info text-white rounded-circle p-3 d-flex align-items-center justify-content-center">
+                                                                <i class="bi bi-currency-dollar fs-4"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                                <div class="p-2"></div>
+
+                                            <!-- Payment Overview -->
+                                            <div class="col-12 col-sm-10 col-md-7 col-lg-6 col-xl-5 col-xxl-4">
+                                                <div class="card widget-card border-light shadow-sm">
+                                                    <div class="card-body p-4">
+                                                        <h5 class="card-title mb-4">Resumen de pagos</h5>
+                                                        <div class="row gy-3">
+                                                            <!-- Template de Pago -->
+                                                            <div class="col-12">
+                                                                <div class="d-flex align-items-center justify-content-between">
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="fs-5 bg-primary-subtle text-primary rounded-2 p-2 me-3">
+                                                                            <i class="bi bi-paypal"></i>
+                                                                        </div>
+                                                                        <div>
+                                                                            <h6 class="m-0">PayPal</h6>
+                                                                            <p class="text-secondary m-0 fs-7">Funds Received</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <h6 class="text-end">$0</h6>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-12">
+                                                                <div class="d-flex align-items-center justify-content-between">
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="fs-5 bg-primary-subtle text-primary rounded-2 p-2 me-3">
+                                                                            <i class="bi bi-stripe"></i>
+                                                                        </div>
+                                                                        <div>
+                                                                            <h6 class="m-0">Stripe</h6>
+                                                                            <p class="text-secondary m-0 fs-7">Invoice Paid</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <h6 class="text-end">$0</h6>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-12">
+                                                                <div class="d-flex align-items-center justify-content-between">
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="fs-5 bg-primary-subtle text-primary rounded-2 p-2 me-3">
+                                                                            <i class="bi bi-credit-card-fill"></i>
+                                                                        </div>
+                                                                        <div>
+                                                                            <h6 class="m-0">Credit Card</h6>
+                                                                            <p class="text-secondary m-0 fs-7">Top Up</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <h6 class="text-end">$0</h6>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-12">
+                                                                <div class="d-flex align-items-center justify-content-between">
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="fs-5 bg-primary-subtle text-primary rounded-2 p-2 me-3">
+                                                                            <i class="bi bi-bank2"></i>
+                                                                        </div>
+                                                                        <div>
+                                                                            <h6 class="m-0">Bank</h6>
+                                                                            <p class="text-secondary m-0 fs-7">Check Deposited</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <h6 class="text-end">$0</h6>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-12">
+                                                                <div class="d-flex align-items-center justify-content-between">
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="fs-5 bg-primary-subtle text-primary rounded-2 p-2 me-3">
+                                                                            <i class="bi bi-wallet-fill"></i>
+                                                                        </div>
+                                                                        <div>
+                                                                            <h6 class="m-0">Wallet</h6>
+                                                                            <p class="text-secondary m-0 fs-7">Bill Payment</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <h6 class="text-end">$0</h6>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-12">
+                                                                <div class="d-flex align-items-center justify-content-between">
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="fs-5 bg-primary-subtle text-primary rounded-2 p-2 me-3">
+                                                                            <i class="bi bi-arrow-up-left-circle-fill"></i>
+                                                                        </div>
+                                                                        <div>
+                                                                            <h6 class="m-0">Refund</h6>
+                                                                            <p class="text-secondary m-0 fs-7">Case Closed</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <h6 class="text-end">$0</h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                                                <div class="p-2">Apellido</div>
-                                            </div>
-                                            <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                                <div class="p-2"></div>
-                                            </div>
-                                            <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                                                <div class="p-2">Email</div>
-                                            </div>
-                                            <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                                <div class="p-2"></div>
-                                            </div>
-                                            <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                                                <div class="p-2">Fecha de nacimiento</div>
-                                            </div>
-                                            <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                                <div class="p-2"></div>
-                                            </div>
-                                            <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                                                <div class="p-2">Usuario</div>
-                                            </div>
-                                            <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                                <div class="p-2"></div>
-                                            </div>
-                                            <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                                                <div class="p-2">País</div>
-                                            </div>
-                                            <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                                <div class="p-2"></div>
-                                            </div>
-                                            <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                                                <div class="p-2">Provincia</div>
-                                            </div>
-                                            <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                                <div class="p-2"></div>
-                                            </div>
-                                           
                                         </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-                                        <form action="#!" class="row gy-3 gy-xxl-4">
-                                            <div class="col-12 col-md-6">
-                                                <label for="inputFirstName" class="form-label">Email</label>
-                                                <input type="text" class="form-control" id="inputFirstName">
-                                                    </div>
-                                            <div class="col-12 col-md-6">
-                                                <label for="inputLastName" class="form-label">Usuario</label>
-                                                <input type="text" class="form-control" id="inputLastName">
-                                            </div>
-                                            <div class="col-12 col-md-6">
-                                                <label for="inputEducation" class="form-label">País</label>
-                                                <input type="text" class="form-control" id="inputEducation">
-                                            </div>
-                                            <div class="col-12 col-md-6">
-                                                <label for="inputSkills" class="form-label">Provincia</label>
-                                                <input type="text" class="form-control" id="inputSkills">
-                                            </div>
-                                            <div class="col-12 col-md-6">
-                                                <label for="inputJob" class="form-label">Telefono</label>
-                                                <input type="text" class="form-control" id="inputJob">
-                                            </div>
-                                            <div class="col-12">
-                                                <button type="submit" class="btn btn-primary">Save Changes</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="tab-pane fade" id="email-tab-pane" role="tabpanel" aria-labelledby="email-tab" tabindex="0">
-                                        <form action="#!">
-                                            <fieldset class="row gy-3 gy-md-0">
-                                                <legend class="col-form-label col-12 col-md-3 col-xl-2">Email Alerts</legend>
-                                                <div class="col-12 col-md-9 col-xl-10">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="emailChange">
-                                                        <label class="form-check-label" for="emailChange">
-                                                            Email Changed
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="passwordChange">
-                                                        <label class="form-check-label" for="passwordChange">
-                                                            Password Changed
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="weeklyNewsletter">
-                                                        <label class="form-check-label" for="weeklyNewsletter">
-                                                            Weekly Newsletter
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="productPromotions">
-                                                        <label class="form-check-label" for="productPromotions">
-                                                            Product Promotions
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </fieldset>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <button type="submit" class="btn btn-primary mt-4">Save Changes</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="tab-pane fade" id="password-tab-pane" role="tabpanel" aria-labelledby="password-tab" tabindex="0">
-                                        <form action="#!">
-                                            <div class="row gy-3 gy-xxl-4">
-                                                <div class="col-12">
-                                                    <label for="currentPassword" class="form-label">Current Password</label>
-                                                    <input type="password" class="form-control" id="currentPassword">
-                                                </div>
-                                                <div class="col-12">
-                                                    <label for="newPassword" class="form-label">New Password</label>
-                                                    <input type="password" class="form-control" id="newPassword">
-                                                </div>
-                                                <div class="col-12">
-                                                    <label for="confirmPassword" class="form-label">Confirm Password</label>
-                                                    <input type="password" class="form-control" id="confirmPassword">
-                                                </div>
-                                                <div class="col-12">
-                                                    <button type="submit" class="btn btn-primary">Change Password</button>
-                                                </div>
-                                            </div>
-                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
         </section>
     </main>
 
