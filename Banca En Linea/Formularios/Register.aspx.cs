@@ -9,13 +9,16 @@ namespace Banca_En_Linea
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            if (!IsPostBack)
+            {
+                TxtNacimiento.Text = DateTime.Now.ToString("yyyy-MM-dd");
+            }
         }
 
         protected void BtnRegistro_Click(object sender, EventArgs e)
         {
             // Obtener los datos del formulario
-            long cedula = Convert.ToInt64(TxtCedula.Text);
+            string cedula = TxtCedula.Text;
             string nombre = TxtNombre.Text;
             string apellido = TxtApellido.Text;
             string usuario = TxtUsuario.Text;
@@ -25,7 +28,7 @@ namespace Banca_En_Linea
             string direccion = TxtDireccion.Text;
             string telefono = TxtTelefono.Text;
             string correo = TxtCorreo.Text;
-            string preguntaSeguridad = DdlPregunta.SelectedItem.Text;
+            string preguntaSeguridad = DdlPregunta.SelectedItem.Value;
             string respuestaSeguridad = TxtRespuesta.Text;
             DateTime fechaCreacion = DateTime.Now;
             DateTime fechaModificacion = DateTime.Now;
@@ -33,29 +36,31 @@ namespace Banca_En_Linea
 
 
             // habilitar la visualizacion del mensaje de error en caso de que exista uno y mostrar el mensaje, o caso contrario insertar el cliente
-            string error = ValidarFormulario(cedula, nombre, apellido, contrasena, confirmacion, fechaNacimiento, direccion, telefono, correo, preguntaSeguridad, respuestaSeguridad);
+            string error = ValidarFormulario(cedula, nombre, apellido, contrasena, confirmacion, fechaNacimiento, direccion, telefono, correo, respuestaSeguridad);
             if (error != null)
             {
                 LblError.Text = error;
                 LblError.Visible = true;
                 return;
             }
-
-
-
-
-            // Aquí debes manejar la inserción de los datos en tu base de datos, incluyendo la lógica necesaria
-            using (var context = new Easy_Pay_Entities())
+            else
             {
-                context.InsertarCliente(cedula, nombre, apellido, usuario, contrasena, fechaNacimiento, direccion, telefono, correo, null, fechaCreacion, fechaModificacion, fechaUltimoIngreso);
-                // Guardar la pregunta y respuesta de seguridad en la base de datos aquí, si es necesario
+                LblError.Visible = false;
+
+                // Aquí debes manejar la inserción de los datos en tu base de datos, incluyendo la lógica necesaria
+                using (var context = new Easy_Pay_Entities())
+                {
+                    context.InsertarCliente(string.IsNullOrWhiteSpace(cedula) ? 0 : Convert.ToInt64(cedula), nombre, apellido, usuario, contrasena, fechaNacimiento, direccion, telefono, correo, null, fechaCreacion, fechaModificacion, fechaUltimoIngreso);
+                    // Guardar la pregunta y respuesta de seguridad en la base de datos aquí, si es necesario
+                }
+
             }
 
         }
 
-        private string ValidarFormulario(long cedula, string nombre, string apellido, string contrasena, string confirmacion, DateTime fechaNacimiento, string direccion, string telefono, string correo, string preguntaSeguridad, string respuestaSeguridad)
+        private string ValidarFormulario(string cedula, string nombre, string apellido, string contrasena, string confirmacion, DateTime fechaNacimiento, string direccion, string telefono, string correo, string respuestaSeguridad)
         {
-            if (!ValidarCedula(cedula.ToString()))
+            if (!ValidarCedula(cedula))
             {
                 return "La cédula ingresada no es válida.";
             }
@@ -100,11 +105,6 @@ namespace Banca_En_Linea
                 return "El correo electrónico ingresado no es válido.";
             }
 
-            if (!ValidarPreguntaSeguridad(preguntaSeguridad))
-            {
-                return "La pregunta de seguridad ingresada no es válida.";
-            }
-
             if (!ValidarRespuestaSeguridad(respuestaSeguridad))
             {
                 return "La respuesta de seguridad ingresada no es válida.";
@@ -112,30 +112,11 @@ namespace Banca_En_Linea
 
             return null;
         }
+
         private bool ValidarCedula(string cedula)
         {
-            if (cedula.Length != 9)
-            {
-                return false;
-            }
-            int digitoVerificador = int.Parse(cedula.Substring(8, 1));
-            int suma = 0;
-            for (int i = 0; i < 8; i++)
-            {
-                int digito = int.Parse(cedula.Substring(i, 1));
-                if (i % 2 == 0)
-                {
-                    digito *= 2;
-                    if (digito > 9)
-                    {
-                        digito -= 9;
-                    }
-                }
-                suma += digito;
-            }
-            int residuo = suma % 10;
-            int resultado = residuo == 0 ? 0 : 10 - residuo;
-            return resultado == digitoVerificador;
+            // Verifica que tenga al menos 9 caracteres y que todos sean dígitos.
+            return cedula.Length >= 9 && cedula.All(char.IsDigit);
         }
 
         private bool ValidarNombre(string nombre)
@@ -213,11 +194,6 @@ namespace Banca_En_Linea
             {
                 return false;
             }
-            // Verificar que la dirección contenga al menos un número
-            if (!direccion.Any(char.IsDigit))
-            {
-                return false;
-            }
             return true;
         }
         private bool ValidarTelefono(string telefono)
@@ -239,36 +215,21 @@ namespace Banca_En_Linea
         }
         private bool ValidarCorreo(string correo)
         {
-            // Verificar que el correo no esté vacío y tenga una longitud razonable
-            if (string.IsNullOrWhiteSpace(correo) || correo.Length < 5 || correo.Length > 50)
+            // Verificar que el correo no esté vacío ni exceda límites de longitud
+            if (string.IsNullOrWhiteSpace(correo) || correo.Length > 320)
             {
                 return false;
             }
-            // Verificar que el correo contenga un @
-            if (!correo.Contains("@"))
-            {
-                return false;
-            }
-            // Verificar que el correo contenga un .
-            if (!correo.Contains("."))
-            {
-                return false;
-            }
-            return true;
+
+            // Usar una expresión regular para validar el formato del correo
+            string patron = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            return System.Text.RegularExpressions.Regex.IsMatch(correo, patron);
         }
-        private bool ValidarPreguntaSeguridad(string preguntaSeguridad)
-        {
-            // Verificar que la pregunta de seguridad no esté vacía y tenga una longitud razonable
-            if (string.IsNullOrWhiteSpace(preguntaSeguridad) || preguntaSeguridad.Length < 5 || preguntaSeguridad.Length > 50)
-            {
-                return false;
-            }
-            return true;
-        }
+
         private bool ValidarRespuestaSeguridad(string respuestaSeguridad)
         {
             // Verificar que la respuesta de seguridad no esté vacía y tenga una longitud razonable
-            if (string.IsNullOrWhiteSpace(respuestaSeguridad) || respuestaSeguridad.Length < 5 || respuestaSeguridad.Length > 50)
+            if (string.IsNullOrWhiteSpace(respuestaSeguridad) || respuestaSeguridad.Length < 3 || respuestaSeguridad.Length > 50)
             {
                 return false;
             }
