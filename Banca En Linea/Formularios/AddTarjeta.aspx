@@ -20,32 +20,32 @@
                             <form action="#!">
                                 <div class="row gy-3 gy-md-4">
                                     <div class="col-12">
-                                        <label for="firstName" class="form-label">Nombre <span class="text-danger">*</span></label>
+                                        <label for="txtNombre" class="form-label">Nombre <span class="text-danger">*</span></label>
                                         <div class="input-group">
                                             <span class="input-group-text">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-vcard" viewBox="0 0 16 16">
                                                     <path d="M5 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4m4-2.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5M9 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4A.5.5 0 0 1 9 8m1 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5" />
                                                     <path d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H8.96c.026-.163.04-.33.04-.5C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1.006 1.006 0 0 1 1 12z" />
                                                 </svg>
-                                            </span>
-                                            <input type="text" id="firstName" class="form-control" placeholder="Nombre" required>
+                                            </span>  
+                                            <asp:TextBox type="text" id="txtNombre" class="form-control" placeholder="Nombre" runat="server" required/>
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <label for="cardNumber" class="form-label">Número de tarjeta <span class="text-danger">*</span></label>
-                                        <input type="text" id="cardNumber" class="form-control" placeholder="1234 5678 9012 3456" required>
+                                        <label for="txtNumeroTarjeta" class="form-label">Número de tarjeta <span class="text-danger">*</span></label>
+                                        <asp:TextBox type="text" id="txtNumeroTarjeta" class="form-control" runat="server" placeholder="1234 5678 9012 3456" required/>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="expiryDate" class="form-label">Fecha de vencimiento <span class="text-danger">*</span></label>
-                                        <input type="text" id="expiryDate" class="form-control" placeholder="MM/YY" required>
+                                        <label for="txtFechaVencimiento" class="form-label">Fecha de vencimiento <span class="text-danger">*</span></label>
+                                        <input type="text" id="txtFechaVencimiento" class="form-control" runat="server" placeholder="MM/YY" required>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="cvv" class="form-label">CVV <span class="text-danger">*</span></label>
-                                        <input type="text" id="cvv" class="form-control" placeholder="123" required>
+                                        <label for="txtcvv" class="form-label">CVV <span class="text-danger">*</span></label>
+                                        <input type="text" id="txtcvv" class="form-control" runat="server" placeholder="123" required>
                                     </div>
                                     <div class="col-12">
                                         <div class="d-grid">
-                                            <button class="btn btn-primary btn-lg" type="submit">Añadir tarjeta</button>
+                                            <button class="btn btn-primary btn-lg" type="submit" ID="BtnRegistro" onclick="BtnAddTarjeta_Click" runat="server">Añadir tarjeta</button>
                                         </div>
                                     </div>
                                 </div>
