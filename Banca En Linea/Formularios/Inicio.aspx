@@ -11,7 +11,7 @@
 </head>
 <body>
     <!-- Hero 5 - Bootstrap Brain Component -->
-    <section class="bsb-hero-5 px-3 bsb-overlay" style="background-image: url('./assets/img/hero-img-1.webp');">
+    <section class="bsb-hero-5 px-3 bsb-overlay" style="background-image: url('<%= ResolveUrl("~/Images/pexels-dana-tentis-118658-370799.jpg") %>');">
         <div class="container">
             <div class="row justify-content-md-center align-items-center">
                 <div class="col-12 col-md-11 col-lg-9 col-xl-8 col-xxl-7">

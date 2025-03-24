@@ -3,9 +3,11 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <main>
+
         <section class="bg-light py-3 py-md-5 py-xl-8">
 
             <div class="container">
+
                 <div class="row gy-4 gy-lg-0">
                     <div class="col-12 col-lg-4 col-xl-3">
                         <div class="row gy-4">
@@ -14,7 +16,7 @@
                                     <div class="card-header text-bg-primary">Welcome, Username</div>
                                     <div class="card-body">
                                         <div class="text-center mb-3">
-                                            <img src=" " class="img-fluid rounded-circle" alt="Luna John">
+                                            <img src=<%= ResolveUrl("~/Images/logo.png") %> class="img-fluid rounded-circle" alt="Luna John">
                                         </div>
                                         <h5 class="text-center mb-1">Username</h5>
                                         <p class="text-center text-secondary mb-4">Cuenta personal</p>
@@ -200,7 +202,9 @@
                 </div>
             </div>
 
+
         </section>
+
     </main>
 
 </asp:Content>

@@ -23,7 +23,7 @@
                             <div class="card border-light-subtle shadow-sm">
                                 <div class="row g-0">
                                     <div class="col-12 col-md-6">
-                                        <img class="img-fluid rounded-start w-100 h-100 object-fit-cover" loading="lazy" src="./assets/img/logo-img-1.webp" alt="Welcome back you've been missed!">
+                                        <img src="<%= ResolveUrl("~/Images/pexels-dana-tentis-118658-370799.jpg") %>" alt="Welcome back you've been missed!" class="img-fluid rounded-start w-100 h-100 object-fit-cover" loading="lazy" />
                                     </div>
                                     <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
                                         <div class="col-12 col-lg-11 col-xl-10">
@@ -33,7 +33,7 @@
                                                         <div class="mb-5">
                                                             <div class="text-center mb-4">
                                                                 <a href="#!">
-                                                                    <img src="./assets/img/bsb-logo.svg" alt="BootstrapBrain Logo" width="175" height="57">
+                                                                    <img src="<%= ResolveUrl("~/Images/logo.png") %>" alt="" width="200" height="120" />
                                                                 </a>
                                                             </div>
                                                             <h4 class="text-center">Welcome back you've been missed!</h4>
