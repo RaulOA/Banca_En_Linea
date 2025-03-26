@@ -7,7 +7,7 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/bs-brain@2.0.4/components/password-resets/password-reset-12/assets/css" />
 </head>
 <body>
@@ -50,9 +50,9 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="d-grid">
-<form id="form1" runat="server">
-    <asp:Button ID="btnReset" runat="server" Text="Reset" />
-</form>
+                                            <form id="form1" runat="server">
+                                                <asp:Button ID="btnReset" runat="server" Text="Reset" />
+                                            </form>
                                         </div>
                                     </div>
                                     <div class="col-12">
