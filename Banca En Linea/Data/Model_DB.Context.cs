@@ -9,11 +9,13 @@
 
 namespace Banca_En_Linea.Data
 {
+    using Banca_En_Linea.Modelos;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     using System.Data.Objects;
     using System.Data.Objects.DataClasses;
+    using System.Data.SqlClient;
     using System.Linq;
     
     public partial class Easy_Pay_Entities : DbContext
@@ -84,6 +86,21 @@ namespace Banca_En_Linea.Data
                 new ObjectParameter("FechaUltimoIngreso", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarCliente", cedulaParameter, nombreParameter, apellidoParameter, nombreUsuarioParameter, contrasenaParameter, fechaNacimientoParameter, direccionParameter, telefonoParameter, correoParameter, fotoParameter, fechaCreacionParameter, fechaModificacionParameter, fechaUltimoIngresoParameter);
+        }
+
+        public MProfile ObtenerDatosCliente(long cedula)
+        {
+            using (var context = new Easy_Pay_Entities())
+            {
+                var cedulaParameter = new SqlParameter("@CEDULA_CLIENTE", cedula);
+
+                var resultado = context.Database.SqlQuery<MProfile>(
+                    "EXEC USP_CLIENTE_CUENTA_DATOS_SALDOS @CEDULA_CLIENTE",
+                    cedulaParameter
+                ).ToList();
+
+                return resultado.FirstOrDefault(); // Devuelve el primer resultado o null si no hay datos
+            }
         }
     }
 }

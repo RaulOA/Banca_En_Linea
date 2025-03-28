@@ -39,7 +39,7 @@ namespace Banca_En_Linea
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtFechaVencimiento;
+        protected global::System.Web.UI.WebControls.TextBox txtFechaVencimiento;
 
         /// <summary>
         /// Control txtcvv.
@@ -48,7 +48,7 @@ namespace Banca_En_Linea
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtcvv;
+        protected global::System.Web.UI.WebControls.TextBox txtcvv;
 
         /// <summary>
         /// Control BtnRegistro.
@@ -57,6 +57,15 @@ namespace Banca_En_Linea
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton BtnRegistro;
+        protected global::System.Web.UI.WebControls.Button BtnRegistro;
+
+        /// <summary>
+        /// Control LblError.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblError;
     }
 }

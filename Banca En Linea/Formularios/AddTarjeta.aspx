@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AddTarjeta.aspx.cs" Inherits="Banca_En_Linea._AddTarjeta" %>
+﻿    <%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AddTarjeta.aspx.cs" Inherits="Banca_En_Linea._AddTarjeta" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
@@ -37,15 +37,20 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="txtFechaVencimiento" class="form-label">Fecha de vencimiento <span class="text-danger">*</span></label>
-                                        <input type="text" id="txtFechaVencimiento" class="form-control" runat="server" placeholder="MM/YY" required>
+                                        <<asp:TextBox type="text" id="txtFechaVencimiento" class="form-control" runat="server" placeholder="MM/YY" required/>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="txtcvv" class="form-label">CVV <span class="text-danger">*</span></label>
-                                        <input type="text" id="txtcvv" class="form-control" runat="server" placeholder="123" required>
+                                        <<asp:TextBox type="text" id="txtcvv" class="form-control" runat="server" placeholder="123" required/>
                                     </div>
                                     <div class="col-12">
                                         <div class="d-grid">
-                                            <button class="btn btn-primary btn-lg" type="submit" ID="BtnRegistro" onclick="BtnAddTarjeta_Click" runat="server">Añadir tarjeta</button>
+                                            <<asp:button ID="BtnRegistro" runat="server" CssClass="btn btn-primary btn-lg" type="submit" text="Añadir tarjeta" onclick="BtnAddTarjeta_Click" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                         <div class="form-floating mb-3">
+                                            <asp:Label ID="LblError" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
                                         </div>
                                     </div>
                                 </div>

@@ -15,17 +15,17 @@
                         <div class="row gy-4">
                             <div class="col-12">
                                 <div class="card widget-card border-light shadow-sm">
-                                    <div class="card-header text-bg-primary">Welcome, Username</div>
+                                    <div class="card-header text-bg-primary">Welcome,<asp:Label ID="lblNombreUsuario" runat="server" Text="Usuario"></asp:Label></div>
                                     <div class="card-body">
                                         <div class="text-center mb-3">
-                                            <img src=" " class="img-fluid rounded-circle" alt="Luna John">
+                                            <asp:Image ID="imgFoto" runat="server" Width="100px" Height="100px"/>
                                         </div>
-                                        <h5 class="text-center mb-1">Username</h5>
-                                        <p class="text-center text-secondary mb-4">Cuenta personal</p>
+                                        <asp:Label ID="lblNombreCompleto" runat="server" Text="Nombre"></asp:Label>
+                                        <asp:Label ID="lblNumeroCuenta" runat="server" Text="Cuenta"></asp:Label>
                                         <ul class="list-group list-group-flush mb-4">
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                 <h6 class="m-0">Cartera</h6>
-                                                <span>$0.00 USD</span>
+                                                <asp:Label ID="lblSaldo" runat="server" Text="Saldo"></asp:Label>
                                         </ul>
                                     </div>
                                 </div>
@@ -38,12 +38,17 @@
                                             <li class="list-group-item">
                                                 <h6 class="mb-1">
                                                     <span class="bii bi-geo-alt-fill me-2"></span>
-                                                    Ubicación
+                                                    <asp:Label ID="lblDireccion" runat="server" Text="Dirección"></asp:Label>
                                                 </h6>
                                                 <span></span>
                                             </li>
                                         </ul>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <asp:Label ID="lblMensaje" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
                                 </div>
                             </div>
                         </div>
