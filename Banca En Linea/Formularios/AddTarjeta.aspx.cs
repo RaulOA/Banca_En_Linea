@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.EnterpriseServices;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Banca_En_Linea.Data;
+using Microsoft.Ajax.Utilities;
 
 namespace Banca_En_Linea
 {
@@ -25,7 +27,7 @@ namespace Banca_En_Linea
             string cvv = txtcvv.Text;
 
             // habilitar la visualizacion del mensaje de error en caso de que exista uno y mostrar el mensaje, o caso contrario insertar el cliente
-            string error = ValidarFormulario(numeroTarjeta, fechaVencimiento, cvv);
+            string error = ValidarFormulario(numeroTarjeta, fechaVencimiento, cvv,nombre);
             if (error != null)
             {
                 LblError.Text = error;
@@ -40,25 +42,31 @@ namespace Banca_En_Linea
                 using (var context = new Easy_Pay_Entities())
                 {
                     // Inserción de datos en la base de datos
+
                 }
+                
             }
         }
 
-        private string ValidarFormulario(string numeroTarjeta, string fechaVencimiento, string cvv)
+        private string ValidarFormulario(string numeroTarjeta, string fechaVencimiento, string cvv, string nombre)
         {
-            if (ValidarTarjeta(numeroTarjeta))
+            if (!ValidarTarjeta(numeroTarjeta))
             {
                 return "El número de tarjeta no puede estar vacío";
             }
-            if (string.IsNullOrWhiteSpace(fechaVencimiento))
+            if (!ValidarFechaVencimiento(fechaVencimiento))
             {
-                return "La fecha de vencimiento no puede estar vacía";
+                return "La fecha de vencimiento no puede estar vacia o ser menor a la actual";
             }
-            if (string.IsNullOrWhiteSpace(cvv))
+            if (!ValidarCVV(cvv))
             {
-                return "El CVV no puede estar vacío";
+                return "El CVV debe tener 3 dígitos";
             }
-            return null;
+            if (!ValidarNombre(nombre))
+            {
+                return "El nombre no puede estar vacío";
+            }
+            return "Validacon Existosa";
         }
         private bool ValidarTarjeta(string numeroTarjeta)
         {
@@ -78,15 +86,17 @@ namespace Banca_En_Linea
         }
         private bool ValidarNombre(string Nombre)
         {
-            if (Nombre != "nomb")
+            if (Nombre.IsNullOrWhiteSpace() || Nombre.Length < 3 || Nombre.Length >50)
             {
                 return false;
             }
             return true;
         }
-        private bool ValidarFechaVencimiento(DateTime date)
+        private bool ValidarFechaVencimiento(string date)
         {
-            if (date >= DateTime.Now)
+            DateTime FechaVencimiento;
+            DateTime.TryParseExact(date, "MM/yy", CultureInfo.InvariantCulture, DateTimeStyles.None, out FechaVencimiento);
+            if (FechaVencimiento < DateTime.Now)
             {
                 return false;
             }
