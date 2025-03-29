@@ -9,13 +9,11 @@
 
 namespace Banca_En_Linea.Data
 {
-    using Banca_En_Linea.Modelos;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     using System.Data.Objects;
     using System.Data.Objects.DataClasses;
-    using System.Data.SqlClient;
     using System.Linq;
     
     public partial class Easy_Pay_Entities : DbContext
@@ -87,20 +85,34 @@ namespace Banca_En_Linea.Data
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarCliente", cedulaParameter, nombreParameter, apellidoParameter, nombreUsuarioParameter, contrasenaParameter, fechaNacimientoParameter, direccionParameter, telefonoParameter, correoParameter, fotoParameter, fechaCreacionParameter, fechaModificacionParameter, fechaUltimoIngresoParameter);
         }
-
-        public MProfile ObtenerDatosCliente(long cedula)
+    
+        public virtual int sp_CreateTarjetas(Nullable<int> iD, string numeroTarjeta, Nullable<System.DateTime> fechaVencimiento, Nullable<System.DateTime> fechaCreacion, Nullable<int> cVV, Nullable<long> cedula)
         {
-            using (var context = new Easy_Pay_Entities())
-            {
-                var cedulaParameter = new SqlParameter("@CEDULA_CLIENTE", cedula);
-
-                var resultado = context.Database.SqlQuery<MProfile>(
-                    "EXEC USP_CLIENTE_CUENTA_DATOS_SALDOS @CEDULA_CLIENTE",
-                    cedulaParameter
-                ).ToList();
-
-                return resultado.FirstOrDefault(); // Devuelve el primer resultado o null si no hay datos
-            }
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            var numeroTarjetaParameter = numeroTarjeta != null ?
+                new ObjectParameter("NumeroTarjeta", numeroTarjeta) :
+                new ObjectParameter("NumeroTarjeta", typeof(string));
+    
+            var fechaVencimientoParameter = fechaVencimiento.HasValue ?
+                new ObjectParameter("FechaVencimiento", fechaVencimiento) :
+                new ObjectParameter("FechaVencimiento", typeof(System.DateTime));
+    
+            var fechaCreacionParameter = fechaCreacion.HasValue ?
+                new ObjectParameter("FechaCreacion", fechaCreacion) :
+                new ObjectParameter("FechaCreacion", typeof(System.DateTime));
+    
+            var cVVParameter = cVV.HasValue ?
+                new ObjectParameter("CVV", cVV) :
+                new ObjectParameter("CVV", typeof(int));
+    
+            var cedulaParameter = cedula.HasValue ?
+                new ObjectParameter("Cedula", cedula) :
+                new ObjectParameter("Cedula", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_CreateTarjetas", iDParameter, numeroTarjetaParameter, fechaVencimientoParameter, fechaCreacionParameter, cVVParameter, cedulaParameter);
         }
     }
 }

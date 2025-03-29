@@ -24,7 +24,7 @@ namespace Banca_En_Linea
             string nombre = txtNombre.Text;
             string numeroTarjeta = txtNumeroTarjeta.Text;
             string fechaVencimiento = txtFechaVencimiento.Text;
-            string cvv = txtcvv.Text;
+            int cvv = int.Parse(txtcvv.Text);
 
             // habilitar la visualizacion del mensaje de error en caso de que exista uno y mostrar el mensaje, o caso contrario insertar el cliente
             string error = ValidarFormulario(numeroTarjeta, fechaVencimiento, cvv,nombre);
@@ -42,13 +42,18 @@ namespace Banca_En_Linea
                 using (var context = new Easy_Pay_Entities())
                 {
                     // Inserción de datos en la base de datos
-
+                    DateTime Vencimiento;
+                    DateTime.TryParseExact(fechaVencimiento, "MM/yy", CultureInfo.InvariantCulture, DateTimeStyles.None, out Vencimiento);
+                    int id = DateTime.Now.ToString("yyyyMMddHHmmss").GetHashCode();
+                    long cedula = 206780934;//Convert.ToInt64(Session["Cedula"]);
+                    DateTime fechaCreacion = DateTime.Now;
+                    context.sp_CreateTarjetas(id,numeroTarjeta, Vencimiento, fechaCreacion, cvv, cedula);
                 }
                 
             }
         }
 
-        private string ValidarFormulario(string numeroTarjeta, string fechaVencimiento, string cvv, string nombre)
+        private string ValidarFormulario(string numeroTarjeta, string fechaVencimiento, int cvv, string nombre)
         {
             if (!ValidarTarjeta(numeroTarjeta))
             {
@@ -66,7 +71,7 @@ namespace Banca_En_Linea
             {
                 return "El nombre no puede estar vacío";
             }
-            return "Validacon Existosa";
+            return null;
         }
         private bool ValidarTarjeta(string numeroTarjeta)
         {
@@ -76,9 +81,9 @@ namespace Banca_En_Linea
             }
             return true;
         }
-        private bool ValidarCVV(string cvv)
+        private bool ValidarCVV(int cvv)
         {
-            if (cvv.Length != 3)
+            if (cvv.ToString().Length != 3)
             {
                 return false;
             }

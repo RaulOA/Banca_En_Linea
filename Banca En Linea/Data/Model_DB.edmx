@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Easy_Pay_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Easy_Pay_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <Function Name="InsertarCliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Cedula" Type="bigint" Mode="In" />
           <Parameter Name="Nombre" Type="varchar" Mode="In" />
@@ -20,9 +20,16 @@
           <Parameter Name="FechaModificacion" Type="datetime" Mode="In" />
           <Parameter Name="FechaUltimoIngreso" Type="datetime" Mode="In" />
         </Function>
+        <Function Name="sp_CreateTarjetas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="NumeroTarjeta" Type="varchar" Mode="In" />
+          <Parameter Name="FechaVencimiento" Type="datetime" Mode="In" />
+          <Parameter Name="FechaCreacion" Type="datetime" Mode="In" />
+          <Parameter Name="CVV" Type="int" Mode="In" />
+          <Parameter Name="Cedula" Type="bigint" Mode="In" />
+        </Function>
         <EntityContainer Name="Easy_Pay_ModelStoreContainer" />
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Easy_Pay_Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -42,6 +49,14 @@
             <Parameter Name="FechaModificacion" Mode="In" Type="DateTime" />
             <Parameter Name="FechaUltimoIngreso" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <FunctionImport Name="sp_CreateTarjetas">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="NumeroTarjeta" Mode="In" Type="String" />
+            <Parameter Name="FechaVencimiento" Mode="In" Type="DateTime" />
+            <Parameter Name="FechaCreacion" Mode="In" Type="DateTime" />
+            <Parameter Name="CVV" Mode="In" Type="Int32" />
+            <Parameter Name="Cedula" Mode="In" Type="Int64" />
+          </FunctionImport>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -50,6 +65,7 @@
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Easy_Pay_ModelStoreContainer" CdmEntityContainer="Easy_Pay_Entities" >
           <FunctionImportMapping FunctionImportName="InsertarCliente" FunctionName="Easy_Pay_Model.Store.InsertarCliente" />
+          <FunctionImportMapping FunctionImportName="sp_CreateTarjetas" FunctionName="Easy_Pay_Model.Store.sp_CreateTarjetas" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
