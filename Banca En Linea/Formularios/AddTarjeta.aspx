@@ -37,15 +37,15 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="txtFechaVencimiento" class="form-label">Fecha de vencimiento <span class="text-danger">*</span></label>
-                                        <<asp:TextBox type="text" id="txtFechaVencimiento" class="form-control" runat="server" placeholder="MM/YY" required/>
+                                        <asp:TextBox type="text" id="txtFechaVencimiento" class="form-control" runat="server" placeholder="MM/YY" required/>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="txtcvv" class="form-label">CVV <span class="text-danger">*</span></label>
-                                        <<asp:TextBox type="text" id="txtcvv" class="form-control" runat="server" placeholder="123" required/>
+                                        <label for="txtcvv" class="form-label">CVV<span class="text-danger">*</span></label>
+                                        <asp:TextBox type="text" id="txtcvv" class="form-control" runat="server" placeholder="123" required/>
                                     </div>
                                     <div class="col-12">
                                         <div class="d-grid">
-                                            <<asp:button ID="BtnRegistro" runat="server" CssClass="btn btn-primary btn-lg" type="submit" text="Añadir tarjeta" onclick="BtnAddTarjeta_Click" />
+                                            <asp:button ID="BtnRegistro" runat="server" CssClass="btn btn-primary btn-lg" type="submit" text="Añadir tarjeta" onclick="BtnAddTarjeta_Click" />
                                         </div>
                                     </div>
                                     <div class="col-12">
