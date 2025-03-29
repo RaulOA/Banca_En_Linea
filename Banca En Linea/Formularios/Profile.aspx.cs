@@ -20,7 +20,7 @@ namespace Banca_En_Linea
         }
         private void CargarDatosCliente()
         {
-            long cedula = 12345678; // Aquí deberías obtener la cédula del usuario autenticado
+            long cedula = 206780934; // Aquí deberías obtener la cédula del usuario autenticado
 
             using (var context = new Easy_Pay_Entities())
             {

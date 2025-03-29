@@ -14,12 +14,12 @@ namespace Banca_En_Linea.Modelos
         public string Direccion { get; set; }
         public string NumeroDeCuenta { get; set; }
         public decimal Saldo { get; set; }
-        public decimal PayPal { get; set; }
-        public decimal Stripe { get; set; }
-        public decimal CreditCard { get; set; }
-        public decimal Bank { get; set; }
-        public decimal Wallet { get; set; }
-        public decimal Refund { get; set; }
+        public decimal? PayPal { get; set; }
+        public decimal? Stripe { get; set; }
+        public decimal? CreditCard { get; set; }
+        public decimal? Bank { get; set; }
+        public decimal? Wallet { get; set; }
+        public decimal? Refund { get; set; }
 
 
     }
