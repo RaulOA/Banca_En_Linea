@@ -53,16 +53,6 @@ namespace Banca_En_Linea
                         lblSaldo.Text = Convert.ToDecimal(reader["Saldo"]).ToString("C");
                         imgFoto.ImageUrl = reader.IsDBNull(reader.GetOrdinal("Foto")) ? "img/default.jpg" : reader["Foto"].ToString();
 
-                        // Mostrar resumen
-                        //lblDepositos.Text = (reader["Depositos"] as decimal?).GetValueOrDefault(0).ToString("C");
-                        //lblRetiros.Text = (reader["Retiros"] as decimal?).GetValueOrDefault(0).ToString("C");
-                        //lblPayPal.Text = (reader["PayPal"] as decimal?).GetValueOrDefault(0).ToString("C");
-                        //lblStripe.Text = (reader["Stripe"] as decimal?).GetValueOrDefault(0).ToString("C");
-                        //lblTarjetaCredito.Text = (reader["TarjetaCredito"] as decimal?).GetValueOrDefault(0).ToString("C");
-                        //lblTransferenciasBancarias.Text = (reader["TransferenciasBancarias"] as decimal?).GetValueOrDefault(0).ToString("C");
-                        //lblPagosCartera.Text = (reader["PagosCartera"] as decimal?).GetValueOrDefault(0).ToString("C");
-                        //lblReembolsos.Text = (reader["Reembolsos"] as decimal?).GetValueOrDefault(0).ToString("C");
-
                         // Totales consolidados
                         lblTotalIngresos.Text = (reader["TotalIngresos"] as decimal?).GetValueOrDefault(0).ToString("C");
                         lblTotalEgresos.Text = (reader["TotalEgresos"] as decimal?).GetValueOrDefault(0).ToString("C");

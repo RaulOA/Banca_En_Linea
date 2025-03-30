@@ -24,7 +24,7 @@ namespace Banca_En_Linea.Modelos
         public decimal PagosCartera { get; set; }
         public decimal Reembolsos { get; set; }
         public decimal TotalIngresos { get; set; }
-        public decimal TotalEgresos { get; set; }
+        public decimal TotalEgresos { get; set; }   
 
     }
 
