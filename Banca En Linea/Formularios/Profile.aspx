@@ -6,198 +6,99 @@
     <script src="https://unpkg.com/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 
-    <main>
-        <section class="bg-light py-3 py-md-5 py-xl-8">
+    <main class="bg-light py-4">
+        <div class="container mt-4">
+            <div class="row">
+                <!-- Columna izquierda - Datos del cliente -->
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">Perfil del Cliente</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="text-center mb-3">
+                                <asp:Image ID="imgFoto" runat="server" CssClass="img-thumbnail rounded-circle" Width="120" />
+                            </div>
 
-            <div class="container">
-                <div class="row gy-4 gy-lg-0">
-                    <div class="col-12 col-lg-4 col-xl-3">
-                        <div class="row gy-4">
-                            <div class="col-12">
-                                <div class="card widget-card border-light shadow-sm">
-                                    <div class="card-header text-bg-primary">Welcome,<asp:Label ID="lblNombreUsuario" runat="server" Text="Usuario"></asp:Label></div>
-                                    <div class="card-body">
-                                        <div class="text-center mb-3">
-                                            <asp:Image ID="imgFoto" runat="server" Width="100px" Height="100px"/>
-                                        </div>
-                                        <asp:Label ID="lblNombreCompleto" runat="server" Text="Nombre"></asp:Label>
-                                        <asp:Label ID="lblNumeroCuenta" runat="server" Text="Cuenta"></asp:Label>
-                                        <ul class="list-group list-group-flush mb-4">
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <h6 class="m-0">Cartera</h6>
-                                                <asp:Label ID="lblSaldo" runat="server" Text="Saldo"></asp:Label>
-                                        </ul>
-                                    </div>
-                                </div>
+                            <div class="mb-3">
+                                <h6 class="font-weight-bold">Nombre:</h6>
+                                <asp:Label ID="lblNombreCompleto" runat="server" CssClass="form-control-plaintext" />
                             </div>
-                            <div class="col-12">
-                                <div class="card widget-card border-light shadow-sm">
-                                    <div class="card-header text-bg-primary">About Me</div>
-                                    <div class="card-body">
-                                        <ul class="list-group list-group-flush mb-0">
-                                            <li class="list-group-item">
-                                                <h6 class="mb-1">
-                                                    <span class="bii bi-geo-alt-fill me-2"></span>
-                                                    <asp:Label ID="lblDireccion" runat="server" Text="Dirección"></asp:Label>
-                                                </h6>
-                                                <span></span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+
+                            <div class="mb-3">
+                                <h6 class="font-weight-bold">Usuario:</h6>
+                                <asp:Label ID="lblNombreUsuario" runat="server" CssClass="form-control-plaintext" />
                             </div>
-                            <div class="col-12">
-                                <div class="form-floating mb-3">
-                                    <asp:Label ID="lblMensaje" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
-                                </div>
+
+                            <div class="mb-3">
+                                <h6 class="font-weight-bold">Cuenta:</h6>
+                                <asp:Label ID="lblNumeroCuenta" runat="server" CssClass="form-control-plaintext" />
+                            </div>
+
+                            <div class="mb-3">
+                                <h6 class="font-weight-bold">Saldo Actual:</h6>
+                                <asp:Label ID="lblSaldo" runat="server" CssClass="form-control-plaintext font-weight-bold text-success" />
+                            </div>
+
+                            <div class="mb-3">
+                                <h6 class="font-weight-bold">Dirección:</h6>
+                                <asp:Label ID="lblDireccion" runat="server" CssClass="form-control-plaintext" />
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-lg-8 col-xl-9">
-                        <div class="card widget-card border-light shadow-sm">
-                            <div class="card-body p-4">
-                                <div class="tab-content pt-4" id="profileTabContent">
-                                    <div class="tab-pane fade show active" id="overview-tab-pane" role="tabpanel">
-                                        <div class="container-fluid">
-                                            <div class="row gy-4">
-                                                <!-- Transferencias -->
-                                                <div class="col-12 col-sm-6">
-                                                    <div class="card widget-card border-light shadow-sm">
-                                                        <div class="card-body p-4 d-flex justify-content-between align-items-center">
-                                                            <div>
-                                                                <h5 class="card-title mb-3">Transferencias</h5>
-                                                                <h4 class="card-subtitle text-body-secondary m-0">$0</h4>
-                                                            </div>
-                                                            <div class="bg-info text-white rounded-circle p-3 d-flex align-items-center justify-content-center">
-                                                                <i class="bi bi-truck fs-4"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                </div>
 
-                                                <!-- Cartera -->
-                                                <div class="col-12 col-sm-6">
-                                                    <div class="card widget-card border-light shadow-sm">
-                                                        <div class="card-body p-4 d-flex justify-content-between align-items-center">
-                                                            <div>
-                                                                <h5 class="card-title mb-3">Cartera</h5>
-                                                                <h4 class="card-subtitle text-body-secondary m-0">$0</h4>
-                                                            </div>
-                                                            <div class="bg-info text-white rounded-circle p-3 d-flex align-items-center justify-content-center">
-                                                                <i class="bi bi-currency-dollar fs-4"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                <!-- Columna derecha - Transacciones -->
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">Últimas Transacciones</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <!-- AQUÍ VA EL GRIDVIEW -->
+                                <asp:GridView ID="gvTransacciones" runat="server" AutoGenerateColumns="False"
+                                    CssClass="table table-hover table-sm" GridLines="None"
+                                    EmptyDataText="No hay transacciones recientes">
+                                    <Columns>
+                                        <asp:BoundField DataField="Fecha" HeaderText="Fecha"
+                                            DataFormatString="{0:dd/MM/yyyy HH:mm}" ItemStyle-Width="120px" />
 
-                                            <!-- Payment Overview -->
-                                            <div class="col-12 col-sm-10 col-md-7 col-lg-6 col-xl-5 col-xxl-4">
-                                                <div class="card widget-card border-light shadow-sm">
-                                                    <div class="card-body p-4">
-                                                        <h5 class="card-title mb-4">Resumen de pagos</h5>
-                                                        <div class="row gy-3">
-                                                            <!-- Template de Pago -->
-                                                            <div class="col-12">
-                                                                <div class="d-flex align-items-center justify-content-between">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <div class="fs-5 bg-primary-subtle text-primary rounded-2 p-2 me-3">
-                                                                            <i class="bi bi-paypal"></i>
-                                                                        </div>
-                                                                        <div>
-                                                                            <h6 class="m-0">PayPal</h6>
-                                                                            <p class="text-secondary m-0 fs-7">Funds Received</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <h6 class="text-end">$0</h6>
-                                                                </div>
-                                                            </div>
+                                        <asp:BoundField DataField="TipoMovimiento" HeaderText="Tipo de Movimiento"
+                                            ItemStyle-Width="180px" />
 
-                                                            <div class="col-12">
-                                                                <div class="d-flex align-items-center justify-content-between">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <div class="fs-5 bg-primary-subtle text-primary rounded-2 p-2 me-3">
-                                                                            <i class="bi bi-stripe"></i>
-                                                                        </div>
-                                                                        <div>
-                                                                            <h6 class="m-0">Stripe</h6>
-                                                                            <p class="text-secondary m-0 fs-7">Invoice Paid</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <h6 class="text-end">$0</h6>
-                                                                </div>
-                                                            </div>
+                                        <asp:TemplateField HeaderText="Monto" ItemStyle-HorizontalAlign="Right">
+                                            <ItemTemplate>
+                                                <span class='<%# Convert.ToDecimal(Eval("Monto")) >= 0 ? "text-success" : "text-danger" %>'>
+                                                    <%# string.Format("{0:C}", Eval("Monto")) %>
+                                                </span>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                    </Columns>
+                                </asp:GridView>
+                                <!-- FIN DEL GRIDVIEW -->
+                            </div>
 
-                                                            <div class="col-12">
-                                                                <div class="d-flex align-items-center justify-content-between">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <div class="fs-5 bg-primary-subtle text-primary rounded-2 p-2 me-3">
-                                                                            <i class="bi bi-credit-card-fill"></i>
-                                                                        </div>
-                                                                        <div>
-                                                                            <h6 class="m-0">Credit Card</h6>
-                                                                            <p class="text-secondary m-0 fs-7">Top Up</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <h6 class="text-end">$0</h6>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-12">
-                                                                <div class="d-flex align-items-center justify-content-between">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <div class="fs-5 bg-primary-subtle text-primary rounded-2 p-2 me-3">
-                                                                            <i class="bi bi-bank2"></i>
-                                                                        </div>
-                                                                        <div>
-                                                                            <h6 class="m-0">Bank</h6>
-                                                                            <p class="text-secondary m-0 fs-7">Check Deposited</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <h6 class="text-end">$0</h6>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-12">
-                                                                <div class="d-flex align-items-center justify-content-between">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <div class="fs-5 bg-primary-subtle text-primary rounded-2 p-2 me-3">
-                                                                            <i class="bi bi-wallet-fill"></i>
-                                                                        </div>
-                                                                        <div>
-                                                                            <h6 class="m-0">Wallet</h6>
-                                                                            <p class="text-secondary m-0 fs-7">Bill Payment</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <h6 class="text-end">$0</h6>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-12">
-                                                                <div class="d-flex align-items-center justify-content-between">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <div class="fs-5 bg-primary-subtle text-primary rounded-2 p-2 me-3">
-                                                                            <i class="bi bi-arrow-up-left-circle-fill"></i>
-                                                                        </div>
-                                                                        <div>
-                                                                            <h6 class="m-0">Refund</h6>
-                                                                            <p class="text-secondary m-0 fs-7">Case Closed</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <h6 class="text-end">$0</h6>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                            <!-- Resumen de transacciones (opcional, puedes mantenerlo o eliminarlo) -->
+                            <div class="mt-4 p-3 bg-light rounded">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6>Total Ingresos: <span class="text-success">
+                                            <asp:Label ID="lblTotalIngresos" runat="server" Text="$0.00" />
+                                        </span></h6>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>Total Egresos: <span class="text-danger">
+                                            <asp:Label ID="lblTotalEgresos" runat="server" Text="$0.00" />
+                                        </span></h6>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-        </section>
+                </div>
+            </div>
+        </div>
     </main>
 
 </asp:Content>

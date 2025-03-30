@@ -6,6 +6,7 @@ using System.Web.UI.WebControls;
 using Banca_En_Linea.Modelos;
 using System.Data.SqlClient;
 using Banca_En_Linea.Data;
+using System.Data;
 
 namespace Banca_En_Linea
 {
@@ -20,31 +21,101 @@ namespace Banca_En_Linea
         }
         private void CargarDatosCliente()
         {
-            long cedula = 206780934; // Aquí deberías obtener la cédula del usuario autenticado
+
+            long cedula = ObtenerCedulaUsuario();
 
             using (var context = new Easy_Pay_Entities())
             {
                 var cedulaParameter = new SqlParameter("@CEDULA_CLIENTE", cedula);
+                    
+                context.Database.Connection.Open();
 
-                var resultado = context.Database.SqlQuery<MProfile>(
-                    "EXEC USP_CLIENTE_CUENTA_DATOS_SALDOS @CEDULA_CLIENTE",
-                    cedulaParameter
-                ).FirstOrDefault();
-
-                if (resultado != null)
+                try
                 {
-                    lblNombreCompleto.Text = resultado.NombreCompleto;
-                    lblNombreUsuario.Text = resultado.NombreUsuario;
-                    lblDireccion.Text = resultado.Direccion;
-                    lblNumeroCuenta.Text = resultado.NumeroDeCuenta;
-                    lblSaldo.Text = resultado.Saldo.ToString("C"); // Formato moneda
-                    imgFoto.ImageUrl = "data:image/png;base64," + Convert.ToBase64String(resultado.Foto);
+                    // 3. Ejecutar el comando
+                    var command = context.Database.Connection.CreateCommand();
+                    command.CommandText = "USP_CLIENTE_CUENTA_DATOS_SALDOS";
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add(new SqlParameter("@CEDULA_CLIENTE", cedula));
+
+                    // 4. Leer el primer resultset (datos del cliente)
+                    var reader = command.ExecuteReader();
+
+                    // 5. Procesar primer resultset
+                    if (reader.Read())  
+                    {
+
+                        // Asignar a controles
+                        lblNombreCompleto.Text = reader["NombreCompleto"].ToString();
+                        lblNombreUsuario.Text = reader["NombreUsuario"].ToString();
+                        lblDireccion.Text = reader["Direccion"].ToString();
+                        lblNumeroCuenta.Text = reader["NumeroDeCuenta"].ToString();   // CUE.NumeroDeCuenta
+                        lblSaldo.Text = Convert.ToDecimal(reader["Saldo"]).ToString("C");
+                        imgFoto.ImageUrl = reader.IsDBNull(reader.GetOrdinal("Foto")) ? "img/default.jpg" : reader["Foto"].ToString();
+
+                        // Mostrar resumen
+                        //lblDepositos.Text = (reader["Depositos"] as decimal?).GetValueOrDefault(0).ToString("C");
+                        //lblRetiros.Text = (reader["Retiros"] as decimal?).GetValueOrDefault(0).ToString("C");
+                        //lblPayPal.Text = (reader["PayPal"] as decimal?).GetValueOrDefault(0).ToString("C");
+                        //lblStripe.Text = (reader["Stripe"] as decimal?).GetValueOrDefault(0).ToString("C");
+                        //lblTarjetaCredito.Text = (reader["TarjetaCredito"] as decimal?).GetValueOrDefault(0).ToString("C");
+                        //lblTransferenciasBancarias.Text = (reader["TransferenciasBancarias"] as decimal?).GetValueOrDefault(0).ToString("C");
+                        //lblPagosCartera.Text = (reader["PagosCartera"] as decimal?).GetValueOrDefault(0).ToString("C");
+                        //lblReembolsos.Text = (reader["Reembolsos"] as decimal?).GetValueOrDefault(0).ToString("C");
+
+                        // Totales consolidados
+                        lblTotalIngresos.Text = (reader["TotalIngresos"] as decimal?).GetValueOrDefault(0).ToString("C");
+                        lblTotalEgresos.Text = (reader["TotalEgresos"] as decimal?).GetValueOrDefault(0).ToString("C");
+                    }
+
+                    // 6. Pasar al segundo resultset (movimientos)
+                    reader.NextResult();
+
+                    var movimientos = new List<MovimientoViewModel>();
+                    while (reader.Read())
+                    {
+                        movimientos.Add(new MovimientoViewModel
+                        {
+                            TipoMovimiento = ObtenerDescripcionAmigable(reader["TipoMovimiento"].ToString()),
+                            Monto = Convert.ToDecimal(reader["Monto"]),
+                            Fecha = Convert.ToDateTime(reader["Fecha"])
+                        });
+                    }
+
+                    // Asignar al GridView
+                    gvTransacciones.DataSource = movimientos;
+                    gvTransacciones.DataBind();
                 }
-                else
+                finally
                 {
-                    lblMensaje.Text = "No se encontraron datos.";
+                    // Cerrar conexión
+                    context.Database.Connection.Close();
                 }
             }
         }
+
+        private long ObtenerCedulaUsuario()
+        {
+            // Implementa según tu sistema de autenticación
+            // Ejemplo: return ((Usuario)Session["Usuario"]).Cedula;
+            return 206780934; // Temporal para pruebas
+        }
+
+        private string ObtenerDescripcionAmigable(string tipoMovimiento)
+        {
+            switch (tipoMovimiento)
+            {
+                case "Depósito": return "Depósito";
+                case "Retiro": return "Retiro";
+                case "Transferencia": return "Transferencia a otra cuenta";
+                case "PayPal": return "Pago con PayPal";
+                case "Stripe": return "Pago con tarjeta (Stripe)";
+                case "TarjetaCredito": return "Pago con tarjeta de crédito";
+                case "TransferenciaBancaria": return "Transferencia bancaria";
+                case "PagoCartera": return "Pago de cartera";
+                case "Reembolso": return "Reembolso";
+                default: return tipoMovimiento;
+            }
+        }   
     }
 }
