@@ -57,13 +57,13 @@
                                                     <div class="row gy-3 overflow-hidden">
                                                         <div class="col-12">
                                                             <div class="form-floating mb-3">
-                                                                <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
+                                                                <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" placeholder="Email" required></asp:TextBox>
                                                                 <label for="email" class="form-label">Email</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-12">
                                                             <div class="form-floating mb-3">
-                                                                <input type="password" class="form-control" name="password" id="password" value="" placeholder="Password" required>
+                                                                <asp:TextBox ID="txtContrasena" runat="server" TextMode="Password" CssClass="form-control" placeholder="Password" required></asp:TextBox>
                                                                 <label for="password" class="form-label">Password</label>
                                                             </div>
                                                         </div>
@@ -77,13 +77,17 @@
                                                         </div>
                                                         <div class="col-12">
                                                             <div class="d-grid">
-                                                                <button class="btn btn-dark btn-lg" type="submit">Log in now</button>
+                                                                
+                                                                <asp:button class="btn btn-dark btn-lg" id="ButtonLogin" type="submit" runat="server" onclick="BtnLogin_Click" Text="Log in now"/>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </form>
                                                 <div class="row">
                                                     <div class="col-12">
+                                                         <div class="form-floating mb-3">
+                                                            <asp:Label ID="LblError" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
+                                                        </div>
                                                         <div class="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-center mt-5">
                                                             <a href="#!" class="link-secondary text-decoration-none">Create new account</a>
                                                             <a href="#!" class="link-secondary text-decoration-none">Forgot password</a>

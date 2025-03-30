@@ -20,6 +20,10 @@
           <Parameter Name="FechaModificacion" Type="datetime" Mode="In" />
           <Parameter Name="FechaUltimoIngreso" Type="datetime" Mode="In" />
         </Function>
+        <Function Name="ObtenerInformacionClientePorCorreo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Correo" Type="varchar" Mode="In" />
+          <Parameter Name="Contrasena" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="sp_CreateTarjetas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID" Type="int" Mode="In" />
           <Parameter Name="NumeroTarjeta" Type="varchar" Mode="In" />
@@ -57,7 +61,26 @@
             <Parameter Name="CVV" Mode="In" Type="Int32" />
             <Parameter Name="Cedula" Mode="In" Type="Int64" />
           </FunctionImport>
+          <FunctionImport Name="ObtenerInformacionClientePorCorreo" ReturnType="Collection(Easy_Pay_Model.ObtenerInformacionClientePorCorreo_Result)">
+            <Parameter Name="Correo" Mode="In" Type="String" />
+            <Parameter Name="Contrasena" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="ObtenerInformacionClientePorCorreo_Result">
+          <Property Type="Int64" Name="Cedula" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="Apellido" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="NombreUsuario" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="Contrasena" Nullable="false" MaxLength="60" />
+          <Property Type="DateTime" Name="FechaNacimiento" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Direccion" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="Telefono" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Correo" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="Foto" Nullable="true" MaxLength="500" />
+          <Property Type="DateTime" Name="FechaCreacion" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="FechaModificacion" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="FechaUltimoIngreso" Nullable="true" Precision="23" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -66,6 +89,25 @@
         <EntityContainerMapping StorageEntityContainer="Easy_Pay_ModelStoreContainer" CdmEntityContainer="Easy_Pay_Entities" >
           <FunctionImportMapping FunctionImportName="InsertarCliente" FunctionName="Easy_Pay_Model.Store.InsertarCliente" />
           <FunctionImportMapping FunctionImportName="sp_CreateTarjetas" FunctionName="Easy_Pay_Model.Store.sp_CreateTarjetas" />
+          <FunctionImportMapping FunctionImportName="ObtenerInformacionClientePorCorreo" FunctionName="Easy_Pay_Model.Store.ObtenerInformacionClientePorCorreo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Easy_Pay_Model.ObtenerInformacionClientePorCorreo_Result">
+                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="NombreUsuario" ColumnName="NombreUsuario" />
+                <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Foto" ColumnName="Foto" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="FechaUltimoIngreso" ColumnName="FechaUltimoIngreso" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
