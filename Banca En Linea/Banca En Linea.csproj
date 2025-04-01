@@ -229,6 +229,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model_DB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Data\ObtenerInformacionClientePorCorreo_Result.cs">
+      <DependentUpon>Model_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\sp_ObtenerClientePorCedula_Result.cs">
+      <DependentUpon>Model_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

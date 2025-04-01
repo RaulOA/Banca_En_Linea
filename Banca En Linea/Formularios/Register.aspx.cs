@@ -7,6 +7,7 @@ namespace Banca_En_Linea
 {
     public partial class _Register : Page
     {
+        //hola
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)

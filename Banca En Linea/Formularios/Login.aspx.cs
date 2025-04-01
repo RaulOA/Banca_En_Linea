@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Objects;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -31,13 +32,52 @@ namespace Banca_En_Linea
             else
             {
                 LblError.Visible = false;
-                // Aquí debes manejar la inserción de los datos en tu base de datos, incluyendo la lógica necesaria
-                using (var context = new Easy_Pay_Entities())
+
+                // verificar usuario y contraseña mediante el sp_VerificarUsuario
+                using (Easy_Pay_Entities entities = new Easy_Pay_Entities())
                 {
-                    // Inserción de datos en la base de datos
-                    long cedula = 206780934;//Convert.ToInt64(Session["Cedula"]);
-                    //context.sp_Login(cedula, usuario, contrasena);
+                    ObjectParameter usuarioExiste = new ObjectParameter("UsuarioExiste", typeof(bool));
+                    entities.sp_VerificarUsuario(usuario, contrasena, usuarioExiste);
+
+                    if (!(bool)usuarioExiste.Value)
+                    {
+                        LblError.Text = "Usuario o contraseña incorrectos";
+                        LblError.Visible = true;
+                        return;
+                    }
+                    else
+                    {
+                        // Obtener los datos del usuario
+                        var cliente = entities.sp_ObtenerClientePorCedula(Convert.ToInt64(usuario)).FirstOrDefault();
+
+                        if (cliente != null)
+                        {
+                            // Guardar los datos del usuario en la variable de sesión
+                            Session["Usuario"] = new
+                            {
+                                cliente.Cedula,
+                                cliente.Nombre,
+                                cliente.Apellido,
+                                cliente.NombreUsuario,
+                                cliente.Correo,
+                                cliente.FechaNacimiento,
+                                cliente.Direccion,
+                                cliente.Telefono
+                            };
+
+                            // Redirigir a la página principal o a la página deseada
+                            Response.Redirect("PaginaPrincipal.aspx");
+                        }
+                        else
+                        {
+                            LblError.Text = "No se encontraron datos del usuario";
+                            LblError.Visible = true;
+                        }
+                    }
                 }
+
+
+
             }
         }
         private string ValidarFormulario(string usuario, string contrasena)
@@ -63,7 +103,7 @@ namespace Banca_En_Linea
                 return "El correo no puede ser vació";
             }
             ;
-            if (System.Text.RegularExpressions.Regex.IsMatch(correo, patron))
+            if (!System.Text.RegularExpressions.Regex.IsMatch(correo, patron))
             {
                 return "Correo no válido";
             }

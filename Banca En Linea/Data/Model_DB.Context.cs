@@ -114,5 +114,40 @@ namespace Banca_En_Linea.Data
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_CreateTarjetas", iDParameter, numeroTarjetaParameter, fechaVencimientoParameter, fechaCreacionParameter, cVVParameter, cedulaParameter);
         }
+    
+        public virtual ObjectResult<ObtenerInformacionClientePorCorreo_Result> ObtenerInformacionClientePorCorreo(string correo, string contrasena)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            var contrasenaParameter = contrasena != null ?
+                new ObjectParameter("Contrasena", contrasena) :
+                new ObjectParameter("Contrasena", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerInformacionClientePorCorreo_Result>("ObtenerInformacionClientePorCorreo", correoParameter, contrasenaParameter);
+        }
+    
+        public virtual int sp_VerificarUsuario(string correo, string contrasena, ObjectParameter usuarioExiste)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            var contrasenaParameter = contrasena != null ?
+                new ObjectParameter("Contrasena", contrasena) :
+                new ObjectParameter("Contrasena", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_VerificarUsuario", correoParameter, contrasenaParameter, usuarioExiste);
+        }
+    
+        public virtual ObjectResult<sp_ObtenerClientePorCedula_Result> sp_ObtenerClientePorCedula(Nullable<long> cedula)
+        {
+            var cedulaParameter = cedula.HasValue ?
+                new ObjectParameter("Cedula", cedula) :
+                new ObjectParameter("Cedula", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ObtenerClientePorCedula_Result>("sp_ObtenerClientePorCedula", cedulaParameter);
+        }
     }
 }
