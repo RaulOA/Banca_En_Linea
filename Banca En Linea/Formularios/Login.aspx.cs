@@ -8,6 +8,8 @@ using System.Web.UI.WebControls;
 using Banca_En_Linea.Data;
 using Microsoft.Ajax.Utilities;
 
+//Llama a el ModeloCliente
+
 namespace Banca_En_Linea
 {
     public partial class _Login : Page
@@ -48,25 +50,43 @@ namespace Banca_En_Linea
                     else
                     {
                         // Obtener los datos del usuario
-                        var cliente = entities.sp_ObtenerClientePorCedula(Convert.ToInt64(usuario)).FirstOrDefault();
+                        var cliente = entities.sp_ObtenerClientePorCedula(usuario).FirstOrDefault();
+                       
 
                         if (cliente != null)
                         {
                             // Guardar los datos del usuario en la variable de sesión
-                            Session["Usuario"] = new
+                            var tarjetas = entities.sp_TarjtasClientePorCedula(cliente.Cedula).FirstOrDefault();
+                            var Cuentas = entities.sp_CuentasClientePorCedula(cliente.Cedula).FirstOrDefault();
+                            var Tikets = entities.sp_TicketsPorCedula(cliente.Cedula).FirstOrDefault();
+                            var Movimientos = entities.sp_MovimientosPorCedula(cliente.Cedula).FirstOrDefault();
+
+                            Session["DatosCliente"] = new DatosCliente
                             {
-                                cliente.Cedula,
-                                cliente.Nombre,
-                                cliente.Apellido,
-                                cliente.NombreUsuario,
-                                cliente.Correo,
-                                cliente.FechaNacimiento,
-                                cliente.Direccion,
-                                cliente.Telefono
+                                Cedula = cliente.Cedula,
+                                Nombre  = cliente.Nombre,
+                                Apellido = cliente.Apellido,
+                                NombreUsuario = cliente.NombreUsuario,
+                                Correo = cliente.Correo,
+                                FechaNacimiento = cliente.FechaNacimiento.HasValue ? cliente.FechaNacimiento.Value : DateTime.MinValue,
+                                Direccion = cliente.Direccion,
+                                Telefono = cliente.Telefono,
+                                NumeroTarjeta = tarjetas.NumeroTarjeta,
+                                tarjetaCVV = tarjetas.CVV,
+                                FechaVencimientoTarjeta= tarjetas.FechaVencimiento,
+                                cuentaSaldo = Cuentas.Saldo,
+                                TipoCuenta = Cuentas.TipoCuenta,
+                                NumeroDeCuenta = Cuentas.NumeroDeCuenta,
+                                MonedaID = Cuentas.MonedaID,
+                                MovimientosMonto = Movimientos.Monto,
+                                FechaMovimiento =  Movimientos.FechaMovimiento,
+                                CatalogoMovimientoID = Movimientos.CatalogoMovimientosID,
+                                CuantaMoviendoID =Movimientos.CuentaID
                             };
+                            
 
                             // Redirigir a la página principal o a la página deseada
-                            Response.Redirect("PaginaPrincipal.aspx");
+                            Response.Redirect("Main.aspx");
                         }
                         else
                         {

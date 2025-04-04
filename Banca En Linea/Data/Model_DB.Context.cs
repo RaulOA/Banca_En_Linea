@@ -141,13 +141,49 @@ namespace Banca_En_Linea.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_VerificarUsuario", correoParameter, contrasenaParameter, usuarioExiste);
         }
     
-        public virtual ObjectResult<sp_ObtenerClientePorCedula_Result> sp_ObtenerClientePorCedula(Nullable<long> cedula)
+        public virtual ObjectResult<sp_ObtenerClientePorCedula_Result> sp_ObtenerClientePorCedula(string correo)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ObtenerClientePorCedula_Result>("sp_ObtenerClientePorCedula", correoParameter);
+        }
+    
+        public virtual ObjectResult<sp_CuentasClientePorCedula_Result> sp_CuentasClientePorCedula(Nullable<long> cedula)
         {
             var cedulaParameter = cedula.HasValue ?
                 new ObjectParameter("Cedula", cedula) :
                 new ObjectParameter("Cedula", typeof(long));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ObtenerClientePorCedula_Result>("sp_ObtenerClientePorCedula", cedulaParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_CuentasClientePorCedula_Result>("sp_CuentasClientePorCedula", cedulaParameter);
+        }
+    
+        public virtual ObjectResult<sp_MovimientosPorCedula_Result> sp_MovimientosPorCedula(Nullable<long> cedula)
+        {
+            var cedulaParameter = cedula.HasValue ?
+                new ObjectParameter("Cedula", cedula) :
+                new ObjectParameter("Cedula", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_MovimientosPorCedula_Result>("sp_MovimientosPorCedula", cedulaParameter);
+        }
+    
+        public virtual ObjectResult<sp_TarjtasClientePorCedula_Result> sp_TarjtasClientePorCedula(Nullable<long> cedula)
+        {
+            var cedulaParameter = cedula.HasValue ?
+                new ObjectParameter("Cedula", cedula) :
+                new ObjectParameter("Cedula", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_TarjtasClientePorCedula_Result>("sp_TarjtasClientePorCedula", cedulaParameter);
+        }
+    
+        public virtual ObjectResult<sp_TicketsPorCedula_Result> sp_TicketsPorCedula(Nullable<long> cedula)
+        {
+            var cedulaParameter = cedula.HasValue ?
+                new ObjectParameter("Cedula", cedula) :
+                new ObjectParameter("Cedula", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_TicketsPorCedula_Result>("sp_TicketsPorCedula", cedulaParameter);
         }
     }
 }

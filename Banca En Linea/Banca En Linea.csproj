@@ -214,6 +214,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Data\ModeloCliente.cs" />
     <Compile Include="Data\Model_DB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -232,7 +233,19 @@
     <Compile Include="Data\ObtenerInformacionClientePorCorreo_Result.cs">
       <DependentUpon>Model_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\sp_CuentasClientePorCedula_Result.cs">
+      <DependentUpon>Model_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\sp_MovimientosPorCedula_Result.cs">
+      <DependentUpon>Model_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\sp_ObtenerClientePorCedula_Result.cs">
+      <DependentUpon>Model_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\sp_TarjtasClientePorCedula_Result.cs">
+      <DependentUpon>Model_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\sp_TicketsPorCedula_Result.cs">
       <DependentUpon>Model_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
