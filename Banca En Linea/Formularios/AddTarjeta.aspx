@@ -12,7 +12,7 @@
                                 <div class="col-12">
                                     <div class="text-center mb-4">
                                         <a href="#!">
-                                            <img src="./assets/img/bsb-logo.svg" alt="BootstrapBrain Logo" width="175" height="57">
+                                            <img src=<%= ResolveUrl("~/Images/Easy_pay__1_-removebg.png") %> alt="BootstrapBrain Logo" width="200" height="200">
                                         </a>
                                     </div>
                                 </div>
