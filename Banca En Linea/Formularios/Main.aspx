@@ -53,19 +53,19 @@
                             <div class="card-body p-4">
                                 <ul class="nav nav-tabs" id="profileTab" role="tablist">
                                     <li class="nav-item" role="presentation">
-                                        <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview-tab-pane" type="button" role="tab" aria-controls="overview-tab-pane" aria-selected="true" runat="server">Información</button>
+                                        <button class="nav-link active" id="overviewtab" data-bs-toggle="tab" data-bs-target="#overview-tab-pane" type="button" role="tab" aria-controls="overview-tab-pane" aria-selected="true" runat="server">Información</button>
                                     </li>
                                     <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" runat="server">Editar perfil</button>
+                                        <button class="nav-link" id="profiletab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" runat="server">Editar perfil</button>
                                     </li>
                                     <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="password-tab" data-bs-toggle="tab" data-bs-target="#password-tab-pane" type="button" role="tab" aria-controls="password-tab-pane" aria-selected="false" runat="server">Editar contraseña</button>
+                                        <button class="nav-link" id="passwordtab" data-bs-toggle="tab" data-bs-target="#password-tab-pane" type="button" role="tab" aria-controls="password-tab-pane" aria-selected="false" runat="server">Editar contraseña</button>
                                     </li>
                                 </ul>
 
                                 <div class="tab-content pt-4" id="profileTabContent">
                                     <!-- Pestaña de Información -->
-                                    <div class="tab-pane fade show active" id="overview-tab-pane" role="tabpanel" aria-labelledby="overview-tab" tabindex="0">
+                                    <div class="tab-pane fade show active" id="overviewtabpane" role="tabpanel" aria-labelledby="overview-tab" tabindex="0">
                                         <h5 class="mb-3">Cuenta</h5>
                                         <div class="row g-0">
                                             <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
@@ -113,7 +113,7 @@
                                     </div>
 
                                     <!-- Pestaña de Editar Perfil -->
-                                    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                                    <div class="tab-pane fade" id="profiletabpane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
                                         <div class="row gy-3 gy-xxl-4">
                                             <div class="col-12 col-md-6">
                                                 <label class="form-label">Email</label>
@@ -139,7 +139,7 @@
                                     </div>
 
                                     <!-- Pestaña de Editar Contraseña -->
-                                    <div class="tab-pane fade" id="password-tab-pane" role="tabpanel" aria-labelledby="password-tab" tabindex="0">
+                                    <div class="tab-pane fade" id="passwordtabpane" role="tabpanel" aria-labelledby="password-tab" tabindex="0">
                                         <div class="row gy-3 gy-xxl-4">
                                             <div class="col-12">
                                                 <label class="form-label">Contraseña Actual</label>

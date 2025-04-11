@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Banca_En_Linea.Data;
+using Microsoft.Ajax.Utilities;
+using System;
 using System.Data.Objects;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using Banca_En_Linea.Data;
-using Microsoft.Ajax.Utilities;
 
 //Llama a el ModeloCliente
 
@@ -57,31 +54,34 @@ namespace Banca_En_Linea
                         {
                             // Guardar los datos del usuario en la variable de sesión
                             var tarjetas = entities.sp_TarjtasClientePorCedula(cliente.Cedula).FirstOrDefault();
-                            var Cuentas = entities.sp_CuentasClientePorCedula(cliente.Cedula).FirstOrDefault();
-                            var Tikets = entities.sp_TicketsPorCedula(cliente.Cedula).FirstOrDefault();
-                            var Movimientos = entities.sp_MovimientosPorCedula(cliente.Cedula).FirstOrDefault();
+                            var cuentas = entities.sp_CuentasClientePorCedula(cliente.Cedula).FirstOrDefault();
+                            var tikets = entities.sp_TicketsPorCedula(cliente.Cedula).FirstOrDefault();
+                            var movimientos = entities.sp_MovimientosPorCedula(cliente.Cedula).FirstOrDefault();
 
                             Session["DatosCliente"] = new DatosCliente
                             {
                                 Cedula = cliente.Cedula,
-                                Nombre  = cliente.Nombre,
+                                Nombre = cliente.Nombre,
                                 Apellido = cliente.Apellido,
                                 NombreUsuario = cliente.NombreUsuario,
                                 Correo = cliente.Correo,
-                                FechaNacimiento = cliente.FechaNacimiento.HasValue ? cliente.FechaNacimiento.Value : DateTime.MinValue,
-                                Direccion = cliente.Direccion,
-                                Telefono = cliente.Telefono,
-                                NumeroTarjeta = tarjetas.NumeroTarjeta,
-                                tarjetaCVV = tarjetas.CVV,
-                                FechaVencimientoTarjeta= tarjetas.FechaVencimiento,
-                                cuentaSaldo = Cuentas.Saldo,
-                                TipoCuenta = Cuentas.TipoCuenta,
-                                NumeroDeCuenta = Cuentas.NumeroDeCuenta,
-                                MonedaID = Cuentas.MonedaID,
-                                MovimientosMonto = Movimientos.Monto,
-                                FechaMovimiento =  Movimientos.FechaMovimiento,
-                                CatalogoMovimientoID = Movimientos.CatalogoMovimientosID,
-                                CuantaMoviendoID =Movimientos.CuentaID
+                                FechaNacimiento = cliente.FechaNacimiento ?? DateTime.MinValue,
+                                Direccion = cliente.Direccion ?? "No disponible",
+                                Telefono = cliente.Telefono ?? "No disponible",
+                                
+                                NumeroTarjeta = tarjetas?.NumeroTarjeta ?? "Sin tarjeta",
+                                tarjetaCVV = tarjetas != null ? tarjetas.CVV : 0,
+                                FechaVencimientoTarjeta = tarjetas?.FechaVencimiento ?? DateTime.MaxValue,
+
+                                cuentaSaldo = cuentas?.Saldo ?? 0.0m,
+                                TipoCuenta = cuentas?.TipoCuenta ?? "No disponible",
+                                NumeroDeCuenta = cuentas?.NumeroDeCuenta ?? "Sin cuenta",
+                                MonedaID = cuentas?.MonedaID ?? 0,
+
+                                MovimientosMonto = movimientos?.Monto ?? 0.0m,
+                                FechaMovimiento = movimientos?.FechaMovimiento ?? DateTime.MinValue,
+                                CatalogoMovimientoID = movimientos?.CatalogoMovimientosID ?? 0,
+                                CuantaMoviendoID = movimientos?.CuentaID ?? 0
                             };
                             
 

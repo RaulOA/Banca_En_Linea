@@ -33,82 +33,137 @@ namespace Banca_En_Linea
         {
             if (!IsPostBack)
             {
-                CargarDatosUsuario(Convert.ToInt64(Session["Cedula"]));
+                //CargarDatosUsuario(Convert.ToInt64(Session["DatosCliente"].));
+                if (!IsPostBack)
+                {
+                    // Verificar si los datos existen en la sesión
+                    if (Session["DatosCliente"] != null)
+                    {
+                        // Obtener la cédula desde la sesión
+                        var datosCliente = (DatosCliente)Session["DatosCliente"];
+                        CargarDatosUsuario(Convert.ToInt64(datosCliente.Cedula));
+                    }
+                    else
+                    {
+                        // Manejar el caso cuando la sesión no contiene datos
+                        // Podrías redirigir a una página de error o mostrar un mensaje
+                        Response.Redirect("PaginaDeError.aspx");
+                    }
+                }
             }
         }
 
+        //private void CargarDatosUsuario(long usuarioID)
+        //{
+        //    // Obtener la cadena de conexión directa desde el contexto de Entity Framework
+        //    using (var context = new Easy_Pay_Entities())
+        //    {
+        //        string sqlConnectionString = context.Database.Connection.ConnectionString;
+
+        //        using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+        //        {
+        //            try
+        //            {
+        //                SqlCommand command = new SqlCommand("ManejoUsuarios", connection);
+        //                command.CommandType = CommandType.StoredProcedure;
+
+        //                // Parámetros de entrada
+        //                command.Parameters.Add(new SqlParameter("@Accion", "CONSULTAR"));
+        //                command.Parameters.Add(new SqlParameter("@CEDULA_CLIENTE", usuarioID));
+
+        //                // Parámetros de salida
+        //                SqlParameter resultado = new SqlParameter("@Resultado", SqlDbType.Bit);
+        //                resultado.Direction = ParameterDirection.Output;
+        //                command.Parameters.Add(resultado);
+
+        //                SqlParameter mensaje = new SqlParameter("@Mensaje", SqlDbType.VarChar, 200);
+        //                mensaje.Direction = ParameterDirection.Output;
+        //                command.Parameters.Add(mensaje);
+
+        //                connection.Open();
+        //                SqlDataReader reader = command.ExecuteReader();
+
+        //                if (reader.HasRows && reader.Read())
+        //                {
+        //                    // Asignar datos a los controles
+        //                    lblNombreCompleto.Text = $"{reader["Nombre"]} {reader["Apellido"]}";
+        //                    lblEmail.Text = reader["Email"].ToString();
+        //                    lblFechaNacimiento.Text = Convert.ToDateTime(reader["FechaNacimiento"]).ToString("dd/MM/yyyy");
+        //                    lblUsuario.Text = reader["NombreUsuario"].ToString();
+        //                    lblDireccion.Text = reader["Direccion"].ToString();
+        //                    lblTelefono.Text = reader["Telefono"].ToString();
+
+        //                    // Actualizar el welcome message
+        //                    cardHeader.InnerText = $"Welcome, {reader["NombreUsuario"]}";
+        //                    usernameLabel.InnerText = reader["NombreUsuario"].ToString();
+
+        //                    // Actualizar la imagen si existe
+        //                    if (!string.IsNullOrEmpty(reader["Foto"].ToString()))
+        //                    {
+        //                        imgPerfil.ImageUrl = ResolveUrl($"~/Images/Users/{reader["Foto"]}");
+        //                    }
+        //                }
+        //                reader.Close();
+
+        //                // Verificar resultado de la operación
+        //                if (!Convert.ToBoolean(resultado.Value))
+        //                {
+        //                    ClientScript.RegisterStartupScript(this.GetType(), "alert",
+        //                        $"alert('{mensaje.Value.ToString()}');", true);
+        //                }
+        //            }
+        //            catch (SqlException sqlEx)
+        //            {
+        //                // Manejo específico para errores de SQL
+        //                ClientScript.RegisterStartupScript(this.GetType(), "alert",
+        //                    $"alert('Error de base de datos: {sqlEx.Message}');", true);
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                // Manejo de otros errores
+        //                ClientScript.RegisterStartupScript(this.GetType(), "alert",
+        //                    $"alert('Error al cargar datos: {ex.Message}');", true);
+        //            }
+        //        }
+        //    }
+        //}
         private void CargarDatosUsuario(long usuarioID)
         {
-            // Obtener la cadena de conexión directa desde el contexto de Entity Framework
-            using (var context = new Easy_Pay_Entities())
+            try
             {
-                string sqlConnectionString = context.Database.Connection.ConnectionString;
-
-                using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+                // Verificar si los datos existen en la sesión
+                if (Session["DatosCliente"] != null)
                 {
-                    try
-                    {
-                        SqlCommand command = new SqlCommand("ManejoUsuarios", connection);
-                        command.CommandType = CommandType.StoredProcedure;
+                    // Obtener los datos desde la sesión
+                    var datosCliente = (DatosCliente)Session["DatosCliente"];
 
-                        // Parámetros de entrada
-                        command.Parameters.Add(new SqlParameter("@Accion", "CONSULTAR"));
-                        command.Parameters.Add(new SqlParameter("@CEDULA_CLIENTE", usuarioID));
+                    // Asignar los valores a los controles
+                    lblNombreCompleto.Text = $"{datosCliente.Nombre} {datosCliente.Apellido}";
+                    lblEmail.Text = datosCliente.Correo;
+                    lblFechaNacimiento.Text = datosCliente.FechaNacimiento.ToString("dd/MM/yyyy");
+                    lblUsuario.Text = datosCliente.NombreUsuario;
+                    lblDireccion.Text = datosCliente.Direccion;
+                    lblTelefono.Text = datosCliente.Telefono;
 
-                        // Parámetros de salida
-                        SqlParameter resultado = new SqlParameter("@Resultado", SqlDbType.Bit);
-                        resultado.Direction = ParameterDirection.Output;
-                        command.Parameters.Add(resultado);
-
-                        SqlParameter mensaje = new SqlParameter("@Mensaje", SqlDbType.VarChar, 200);
-                        mensaje.Direction = ParameterDirection.Output;
-                        command.Parameters.Add(mensaje);
-
-                        connection.Open();
-                        SqlDataReader reader = command.ExecuteReader();
-
-                        if (reader.HasRows && reader.Read())
-                        {
-                            // Asignar datos a los controles
-                            lblNombreCompleto.Text = $"{reader["Nombre"]} {reader["Apellido"]}";
-                            lblEmail.Text = reader["Email"].ToString();
-                            lblFechaNacimiento.Text = Convert.ToDateTime(reader["FechaNacimiento"]).ToString("dd/MM/yyyy");
-                            lblUsuario.Text = reader["NombreUsuario"].ToString();
-                            lblDireccion.Text = reader["Direccion"].ToString();
-                            lblTelefono.Text = reader["Telefono"].ToString();
-
-                            // Actualizar el welcome message
-                            cardHeader.InnerText = $"Welcome, {reader["NombreUsuario"]}";
-                            usernameLabel.InnerText = reader["NombreUsuario"].ToString();
-
-                            // Actualizar la imagen si existe
-                            if (!string.IsNullOrEmpty(reader["Foto"].ToString()))
-                            {
-                                imgPerfil.ImageUrl = ResolveUrl($"~/Images/Users/{reader["Foto"]}");
-                            }
-                        }
-                        reader.Close();
-
-                        // Verificar resultado de la operación
-                        if (!Convert.ToBoolean(resultado.Value))
-                        {
-                            ClientScript.RegisterStartupScript(this.GetType(), "alert",
-                                $"alert('{mensaje.Value.ToString()}');", true);
-                        }
-                    }
-                    catch (SqlException sqlEx)
-                    {
-                        // Manejo específico para errores de SQL
-                        ClientScript.RegisterStartupScript(this.GetType(), "alert",
-                            $"alert('Error de base de datos: {sqlEx.Message}');", true);
-                    }
-                    catch (Exception ex)
-                    {
-                        // Manejo de otros errores
-                        ClientScript.RegisterStartupScript(this.GetType(), "alert",
-                            $"alert('Error al cargar datos: {ex.Message}');", true);
-                    }
+                    // Actualizar el mensaje de bienvenida
+                    cardHeader.InnerText = $"Welcome, {datosCliente.NombreUsuario}";
+                    usernameLabel.InnerText = datosCliente.NombreUsuario;
                 }
+                else
+                {
+                    // Manejar el caso cuando no hay datos en la sesión
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert",
+                        "alert('No se encontraron datos del cliente en la sesión.');", true);
+
+                    // Alternativamente, podrías redirigir a una página de inicio de sesión o error
+                    Response.Redirect("Login.aspx");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejar cualquier otro error
+                ClientScript.RegisterStartupScript(this.GetType(), "alert",
+                    $"alert('Error al cargar datos desde la sesión: {ex.Message}');", true);
             }
         }
         private long ObtenerCedulaUsuario() //IMPORTARTE  se debe deliminar esta linea cuando se pueda logear con un usuario.

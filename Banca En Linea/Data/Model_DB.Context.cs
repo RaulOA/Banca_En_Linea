@@ -29,7 +29,7 @@ namespace Banca_En_Linea.Data
         }
     
     
-        public virtual int InsertarCliente(Nullable<long> cedula, string nombre, string apellido, string nombreUsuario, string contrasena, Nullable<System.DateTime> fechaNacimiento, string direccion, string telefono, string correo, byte[] foto, Nullable<System.DateTime> fechaCreacion, Nullable<System.DateTime> fechaModificacion, Nullable<System.DateTime> fechaUltimoIngreso)
+        public virtual int InsertarCliente(Nullable<long> cedula, string nombre, string apellido, string nombreUsuario, string contrasena, Nullable<System.DateTime> fechaNacimiento, string direccion, string telefono, string correo, byte[] foto, Nullable<System.DateTime> fechaCreacion, Nullable<System.DateTime> fechaModificacion, Nullable<System.DateTime> fechaUltimoIngreso, Nullable<int> pregunta, string respuesta)
         {
             var cedulaParameter = cedula.HasValue ?
                 new ObjectParameter("Cedula", cedula) :
@@ -83,7 +83,15 @@ namespace Banca_En_Linea.Data
                 new ObjectParameter("FechaUltimoIngreso", fechaUltimoIngreso) :
                 new ObjectParameter("FechaUltimoIngreso", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarCliente", cedulaParameter, nombreParameter, apellidoParameter, nombreUsuarioParameter, contrasenaParameter, fechaNacimientoParameter, direccionParameter, telefonoParameter, correoParameter, fotoParameter, fechaCreacionParameter, fechaModificacionParameter, fechaUltimoIngresoParameter);
+            var preguntaParameter = pregunta.HasValue ?
+                new ObjectParameter("Pregunta", pregunta) :
+                new ObjectParameter("Pregunta", typeof(int));
+    
+            var respuestaParameter = respuesta != null ?
+                new ObjectParameter("Respuesta", respuesta) :
+                new ObjectParameter("Respuesta", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarCliente", cedulaParameter, nombreParameter, apellidoParameter, nombreUsuarioParameter, contrasenaParameter, fechaNacimientoParameter, direccionParameter, telefonoParameter, correoParameter, fotoParameter, fechaCreacionParameter, fechaModificacionParameter, fechaUltimoIngresoParameter, preguntaParameter, respuestaParameter);
         }
     
         public virtual int sp_CreateTarjetas(Nullable<int> iD, string numeroTarjeta, Nullable<System.DateTime> fechaVencimiento, Nullable<System.DateTime> fechaCreacion, Nullable<int> cVV, Nullable<long> cedula)

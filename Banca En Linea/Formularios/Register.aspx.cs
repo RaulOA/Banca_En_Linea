@@ -29,7 +29,7 @@ namespace Banca_En_Linea
             string direccion = TxtDireccion.Text;
             string telefono = TxtTelefono.Text;
             string correo = TxtCorreo.Text;
-            string preguntaSeguridad = DdlPregunta.SelectedItem.Value;
+            int preguntaSeguridad = Convert.ToInt32(DdlPregunta.SelectedItem.Value);
             string respuestaSeguridad = TxtRespuesta.Text;
             DateTime fechaCreacion = DateTime.Now;
             DateTime fechaModificacion = DateTime.Now;
@@ -51,8 +51,11 @@ namespace Banca_En_Linea
                 // Aquí debes manejar la inserción de los datos en tu base de datos, incluyendo la lógica necesaria
                 using (var context = new Easy_Pay_Entities())
                 {
-                    context.InsertarCliente(string.IsNullOrWhiteSpace(cedula) ? 0 : Convert.ToInt64(cedula), nombre, apellido, usuario, contrasena, fechaNacimiento, direccion, telefono, correo, null, fechaCreacion, fechaModificacion, fechaUltimoIngreso);
-                    // Guardar la pregunta y respuesta de seguridad en la base de datos aquí, si es necesario
+                    context.InsertarCliente(string.IsNullOrWhiteSpace(cedula) ? 0 : Convert.ToInt64(cedula), nombre, apellido, usuario, contrasena, fechaNacimiento, direccion, telefono, correo, null, fechaCreacion, fechaModificacion, fechaUltimoIngreso, preguntaSeguridad,respuestaSeguridad);
+                    // si la insercion del cliente es exitosa, se debe mostrar un mensaje emergente con un boton de aceptar, boton el cual luego de ser precionado debe redirigir a la pagina de login
+                    string script = "alert('Registro exitoso.'); window.location.href='Login.aspx';";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "alert", script, true);
+                    Response.Redirect("Login.aspx");
                 }
 
             }

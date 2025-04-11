@@ -42,32 +42,32 @@ namespace Banca_En_Linea
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl usernameLabel;
 
         /// <summary>
-        /// Control overview-tab.
+        /// Control overviewtab.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton overview-tab;
-        
+        protected global::System.Web.UI.HtmlControls.HtmlButton overviewtab;
+
         /// <summary>
-        /// Control profile-tab.
+        /// Control profiletab.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton profile-tab;
-        
+        protected global::System.Web.UI.HtmlControls.HtmlButton profiletab;
+
         /// <summary>
-        /// Control password-tab.
+        /// Control passwordtab.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton password-tab;
-        
+        protected global::System.Web.UI.HtmlControls.HtmlButton passwordtab;
+
         /// <summary>
         /// Control lblNombreCompleto.
         /// </summary>
