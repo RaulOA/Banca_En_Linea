@@ -45,19 +45,36 @@ namespace Banca_En_Linea
                     DateTime Vencimiento;
                     DateTime.TryParseExact(fechaVencimiento, "MM/yy", CultureInfo.InvariantCulture, DateTimeStyles.None, out Vencimiento);
                     int id = DateTime.Now.ToString("yyyyMMddHHmmss").GetHashCode();
-                    long cedula = 206780934;//Convert.ToInt64(Session["Cedula"]);
+                    if (id < 0)
+                    {
+                        id = Math.Abs(id);
+                    }
+
+                    var datosCliente = (DatosCliente)Session["DatosCliente"];
+                    long cedula = datosCliente.Cedula;
                     DateTime fechaCreacion = DateTime.Now;
-                    context.sp_CreateTarjetas(id,numeroTarjeta, Vencimiento, fechaCreacion, cvv, cedula);
+                    context.sp_CreateTarjetas(id, numeroTarjeta, Vencimiento, fechaCreacion, cvv, cedula);
+                    LblDisclaimer.Text = "Se agregó la tarjeta correctamente";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "showDisclaimer",
+                        "var disclaimerEl = document.getElementById('disclaimerContainer');" +
+                        "var myCollapse = new bootstrap.Collapse(disclaimerEl, {toggle: true});", true);
+                    txtNombre.Text = string.Empty;
+                    txtcvv.Text = string.Empty;
+                    txtFechaVencimiento.Text = string.Empty;
+                    txtNumeroTarjeta.Text = string.Empty;
+
+                    Response.Redirect("Main.aspx", false);
                 }
-                
+
             }
         }
 
         private string ValidarFormulario(string numeroTarjeta, string fechaVencimiento, int cvv, string nombre)
         {
-            if (!ValidarTarjeta(numeroTarjeta))
+            string MensajeTarjeta = ValidarTarjeta(numeroTarjeta);
+            if (!MensajeTarjeta.IsNullOrWhiteSpace())
             {
-                return "El número de tarjeta no puede estar vacío";
+                return MensajeTarjeta;
             }
             if (!ValidarFechaVencimiento(fechaVencimiento))
             {
@@ -67,19 +84,28 @@ namespace Banca_En_Linea
             {
                 return "El CVV debe tener 3 dígitos";
             }
-            if (!ValidarNombre(nombre))
+            string MenbsajeNombre = ValidarNombre(nombre);
+            if (!MenbsajeNombre.IsNullOrWhiteSpace())
             {
-                return "El nombre no puede estar vacío";
+               return MenbsajeNombre;
             }
+
             return null;
         }
-        private bool ValidarTarjeta(string numeroTarjeta)
+        private string ValidarTarjeta(string numeroTarjeta)
         {
+            var datosCliente  = (DatosCliente)Session["DatosCliente"];
             if (numeroTarjeta.Length != 16)
             {
-                return false;
+                return "El número de la tarjeta debe contener 16 caracteres";
+
             }
-            return true;
+
+            if (numeroTarjeta == datosCliente.NumeroTarjeta)
+            {
+                return "El numero de tarjeta ya se encuentra registrado";
+            }
+            return string.Empty;
         }
         private bool ValidarCVV(int cvv)
         {
@@ -89,14 +115,20 @@ namespace Banca_En_Linea
             }
             return true;
         }
-        private bool ValidarNombre(string Nombre)
+        private string ValidarNombre(string Nombre)
         {
-            if (Nombre.IsNullOrWhiteSpace() || Nombre.Length < 3 || Nombre.Length >50)
+            var datosCliente = (DatosCliente)Session["DatosCliente"];
+            if (Nombre.IsNullOrWhiteSpace() || Nombre.Length < 3 || Nombre.Length > 50)
             {
-                return false;
+                return "Nombre del propietario debe ser mayor a 3 caracteres y menor a 50";
             }
-            return true;
+            if (Nombre != datosCliente.Nombre)
+            {
+                return "El nombre del propietario no coicide con el usuario de la cuenta";
+            }
+            return string.Empty;
         }
+
         private bool ValidarFechaVencimiento(string date)
         {
             DateTime FechaVencimiento;

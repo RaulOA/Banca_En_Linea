@@ -2,6 +2,7 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <script src="https://unpkg.com/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <main>
         <div class="bg-light py-3 py-md-5">
             <div class="container">
@@ -55,6 +56,12 @@
                                     </div>
                                 </div>
                             </form>
+                             <div id="disclaimerContainer" class="collapse">
+                                <div class="alert alert-info alert-dismissible fade show mt-3" role="alert">
+                                    <asp:Label runat="server" ID="LblDisclaimer" Text="" CssClass="mb-0"></asp:Label>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
