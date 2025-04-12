@@ -26,6 +26,14 @@
           <Parameter Name="Correo" Type="varchar" Mode="In" />
           <Parameter Name="Contrasena" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="sp_ActualizarCliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Cedula" Type="bigint" Mode="In" />
+          <Parameter Name="Correo" Type="varchar" Mode="In" />
+          <Parameter Name="NombreUsuario" Type="varchar" Mode="In" />
+          <Parameter Name="Direccion" Type="varchar" Mode="In" />
+          <Parameter Name="Telefono" Type="varchar" Mode="In" />
+          <Parameter Name="Resultado" Type="int" Mode="InOut" />
+        </Function>
         <Function Name="sp_CreateTarjetas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID" Type="int" Mode="In" />
           <Parameter Name="NumeroTarjeta" Type="varchar" Mode="In" />
@@ -108,6 +116,14 @@
           </FunctionImport>
           <FunctionImport Name="sp_TicketsPorCedula" ReturnType="Collection(Easy_Pay_Model.sp_TicketsPorCedula_Result)">
           <Parameter Name="Cedula" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ActualizarCliente">
+            <Parameter Name="Cedula" Mode="In" Type="Int64" />
+            <Parameter Name="Correo" Mode="In" Type="String" />
+            <Parameter Name="NombreUsuario" Mode="In" Type="String" />
+            <Parameter Name="Direccion" Mode="In" Type="String" />
+            <Parameter Name="Telefono" Mode="In" Type="String" />
+            <Parameter Name="Resultado" Mode="InOut" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="ObtenerInformacionClientePorCorreo_Result">
@@ -269,6 +285,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ActualizarCliente" FunctionName="Easy_Pay_Model.Store.sp_ActualizarCliente" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -193,5 +193,30 @@ namespace Banca_En_Linea.Data
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_TicketsPorCedula_Result>("sp_TicketsPorCedula", cedulaParameter);
         }
+    
+        public virtual int sp_ActualizarCliente(Nullable<long> cedula, string correo, string nombreUsuario, string direccion, string telefono, ObjectParameter resultado)
+        {
+            var cedulaParameter = cedula.HasValue ?
+                new ObjectParameter("Cedula", cedula) :
+                new ObjectParameter("Cedula", typeof(long));
+    
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            var nombreUsuarioParameter = nombreUsuario != null ?
+                new ObjectParameter("NombreUsuario", nombreUsuario) :
+                new ObjectParameter("NombreUsuario", typeof(string));
+    
+            var direccionParameter = direccion != null ?
+                new ObjectParameter("Direccion", direccion) :
+                new ObjectParameter("Direccion", typeof(string));
+    
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("Telefono", telefono) :
+                new ObjectParameter("Telefono", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_ActualizarCliente", cedulaParameter, correoParameter, nombreUsuarioParameter, direccionParameter, telefonoParameter, resultado);
+        }
     }
 }
