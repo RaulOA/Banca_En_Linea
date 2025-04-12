@@ -1,6 +1,7 @@
 ﻿using Banca_En_Linea.Data;
 using Microsoft.Ajax.Utilities;
 using System;
+using System.Collections.Generic;
 using System.Data.Objects;
 using System.Linq;
 using System.Web.UI;
@@ -53,10 +54,29 @@ namespace Banca_En_Linea
                         if (cliente != null)
                         {
                             // Guardar los datos del usuario en la variable de sesión
-                            var tarjetas = entities.sp_TarjtasClientePorCedula(cliente.Cedula).FirstOrDefault();
+                            var tarjetas = entities.sp_TarjtasClientePorCedula(cliente.Cedula).ToList();
                             var cuentas = entities.sp_CuentasClientePorCedula(cliente.Cedula).FirstOrDefault();
                             var tikets = entities.sp_TicketsPorCedula(cliente.Cedula).FirstOrDefault();
                             var movimientos = entities.sp_MovimientosPorCedula(cliente.Cedula).FirstOrDefault();
+                            List<sp_TicketsPorCedula_Result> tickets = entities.sp_TicketsPorCedula(cliente.Cedula).ToList();
+                            List<sp_MovimientosPorCedula_Result> movimientosList = entities.sp_MovimientosPorCedula(cliente.Cedula).ToList();
+                            //List<Cuentas> cuentasList = entities.sp_CuentasClientePorCedula(cliente.Cedula).ToList();
+                            // With this corrected code:
+                            List<Cuentas> cuentasList = entities.sp_CuentasClientePorCedula(cliente.Cedula)
+                                .Select(c => new Cuentas
+                                {
+                                    NumeroCuenta = c.NumeroDeCuenta,
+                                    Saldo = c.Saldo,
+                                    Moneda = "Colones"
+                                }).ToList();
+                            List<Tarjetas> TarjetasList = entities.sp_TarjtasClientePorCedula(cliente.Cedula)
+                               .Select(c => new Tarjetas
+                               {
+                                   NumeroTarjeta = c.NumeroTarjeta,
+                                   tarjetaCVV = c.CVV,
+                                   FechaVencimiento = c.FechaVencimiento,
+                                   TarjetaID = c.ID
+                               }).ToList();
 
                             Session["DatosCliente"] = new DatosCliente
                             {
@@ -68,10 +88,10 @@ namespace Banca_En_Linea
                                 FechaNacimiento = cliente.FechaNacimiento ?? DateTime.MinValue,
                                 Direccion = cliente.Direccion ?? "No disponible",
                                 Telefono = cliente.Telefono ?? "No disponible",
-                                
-                                NumeroTarjeta = tarjetas?.NumeroTarjeta ?? "Sin tarjeta",
-                                tarjetaCVV = tarjetas != null ? tarjetas.CVV : 0,
-                                FechaVencimientoTarjeta = tarjetas?.FechaVencimiento ?? DateTime.MaxValue,
+
+                                //NumeroTarjeta = tarjetas?.NumeroTarjeta ?? "Sin tarjeta",
+                                //tarjetaCVV = tarjetas != null ? tarjetas.CVV : 0,
+                                //FechaVencimientoTarjeta = tarjetas?.FechaVencimiento ?? DateTime.MaxValue,
 
                                 cuentaSaldo = cuentas?.Saldo ?? 0.0m,
                                 TipoCuenta = cuentas?.TipoCuenta ?? "No disponible",
@@ -83,7 +103,10 @@ namespace Banca_En_Linea
                                 CatalogoMovimientoID = movimientos?.CatalogoMovimientosID ?? 0,
                                 CuantaMoviendoID = movimientos?.CuentaID ?? 0
                             };
-                            
+
+                            Session["Tarjetas"] = TarjetasList;
+                            Session["Cuentas"] = cuentasList;
+
 
                             // Redirigir a la página principal o a la página deseada
                             Response.Redirect("Main.aspx");

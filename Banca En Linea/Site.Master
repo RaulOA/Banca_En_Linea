@@ -57,8 +57,8 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#!" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Cuenta</a>
                                 <ul class="dropdown-menu border-0 shadow bsb-zoomIn" aria-labelledby="accountDropdown">
-                                    <li><a class="dropdown-item" href="#!">Ver perfil</a></li>
-                                    <li><a class="dropdown-item" href="/Formularios/AddTarjeta.aspx">Agregar tarjeta</a></li>
+                                    <li><a class="dropdown-item" href="#!">Cuentas</a></li>
+                                    <li><a class="dropdown-item" href="/Formularios/AddTarjeta.aspx">Tarjetas</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
@@ -69,8 +69,6 @@
                                 <a class="nav-link dropdown-toggle" href="#!" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Servicios</a>
                                 <ul class="dropdown-menu border-0 shadow bsb-zoomIn" aria-labelledby="servicesDropdown">
                                     <li><a class="dropdown-item" href="#!">Tranferir</a></li>
-                                    <li><a class="dropdown-item" href="#!">Solicitar</a></li>
-                                    <li><a class="dropdown-item" href="#!">Crear factura</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item">

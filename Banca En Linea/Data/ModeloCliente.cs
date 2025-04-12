@@ -29,3 +29,22 @@ public class DatosCliente
     public int CatalogoMovimientoID { get; set; }
     public int CuantaMoviendoID { get; set; }
 }
+
+
+public class Cuentas
+{
+    public string TipoCuenta { get; set; }
+    public string NumeroCuenta { get; set; }
+    public decimal Saldo { get; set; }
+    public int MonedaID { get; set; }
+    public int CuentaID { get; set; }
+    public string Moneda { get; set; }
+}
+
+public class Tarjetas
+{
+    public string NumeroTarjeta { get; set; }
+    public int tarjetaCVV { get; set; }
+    public DateTime FechaVencimiento { get; set; }
+    public int TarjetaID { get; set; }
+}

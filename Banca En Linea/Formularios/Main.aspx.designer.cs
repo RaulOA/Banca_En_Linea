@@ -24,15 +24,6 @@ namespace Banca_En_Linea
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl cardHeader;
 
         /// <summary>
-        /// Control imgPerfil.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image imgPerfil;
-
-        /// <summary>
         /// Control usernameLabel.
         /// </summary>
         /// <remarks>
@@ -40,6 +31,24 @@ namespace Banca_En_Linea
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl usernameLabel;
+
+        /// <summary>
+        /// Control Cuentatab.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton Cuentatab;
+
+        /// <summary>
+        /// Control TarjetaTab.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton TarjetaTab;
 
         /// <summary>
         /// Control overviewtab.
@@ -67,6 +76,24 @@ namespace Banca_En_Linea
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlButton passwordtab;
+
+        /// <summary>
+        /// Control rptCuentas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptCuentas;
+
+        /// <summary>
+        /// Control rptTarjetas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptTarjetas;
 
         /// <summary>
         /// Control lblNombreCompleto.

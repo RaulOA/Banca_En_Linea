@@ -1,5 +1,6 @@
 ﻿using Banca_En_Linea.Data;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Objects;
 using System.Data.SqlClient;
@@ -38,10 +39,11 @@ namespace Banca_En_Linea
             try
             {
                 // Verificar si los datos existen en la sesión
-                if (Session["DatosCliente"] != null)
+                if (Session["DatosCliente"] != null || Session["Tarjetas"] != null || Session["Cuentas"] != null)
                 {
                     // Obtener los datos desde la sesión
                     var datosCliente = (DatosCliente)Session["DatosCliente"];
+
 
                     // Asignar los valores a los controles
                     lblNombreCompleto.Text = $"{datosCliente.Nombre} {datosCliente.Apellido}";
@@ -54,6 +56,16 @@ namespace Banca_En_Linea
                     // Actualizar el mensaje de bienvenida
                     cardHeader.InnerText = $"Welcome, {datosCliente.NombreUsuario}";
                     usernameLabel.InnerText = datosCliente.NombreUsuario;
+
+                    //Asignar Valores de las tarjetas
+                    List<Tarjetas> tarjetas = (List<Tarjetas>)Session["Tarjetas"];
+                    rptTarjetas.DataSource = tarjetas;
+                    rptTarjetas.DataBind();
+
+                    //Asignar Valores de las Cuentas
+                    List<Cuentas> cuentas = (List<Cuentas>)Session["Cuentas"];
+                    rptCuentas.DataSource = cuentas;
+                    rptCuentas.DataBind();
                 }
                 else
                 {
