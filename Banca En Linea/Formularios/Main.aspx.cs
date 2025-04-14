@@ -1,4 +1,5 @@
-﻿using Banca_En_Linea.Data;
+﻿
+using Banca_En_Linea.Data;
 using System;
 using System.Collections.Generic;
 using System.Data.Objects;
@@ -15,27 +16,31 @@ namespace Banca_En_Linea
             {
                 if (Session["DatosCliente"] != null)
                 {
-                    // Obtener la cédula desde la sesión
+                    // Obtener la cédula desde la sesión y cargar los datos del usuario
                     var datosCliente = (DatosCliente)Session["DatosCliente"];
                     CargarDatosUsuario(Convert.ToInt64(datosCliente.Cedula));
                 }
                 else
                 {
+                    // Redirigir al login si no hay datos en la sesión
                     Response.Redirect("Login.aspx");
                 }
             }
             else
             {
+                // Llenar los campos del perfil en caso de postback
                 LlenarCamposPerfil();
             }
         }
+
         private void CargarDatosUsuario(long usuarioID)
         {
             try
             {
-                if (Session["DatosCliente"] != null || Session["Tarjetas"] != null || Session["Cuentas"] != null)
+                if (Session["DatosCliente"] != null && Session["Tarjetas"] != null && Session["Cuentas"] != null)
                 {
                     var datosCliente = (DatosCliente)Session["DatosCliente"];
+                    // Asignar datos del cliente a los controles de la interfaz
                     lblNombreCompleto.Text = $"{datosCliente.Nombre} {datosCliente.Apellido}";
                     lblEmail.Text = datosCliente.Correo;
                     lblFechaNacimiento.Text = datosCliente.FechaNacimiento.ToString("dd/MM/yyyy");
@@ -44,79 +49,62 @@ namespace Banca_En_Linea
                     lblTelefono.Text = datosCliente.Telefono;
                     cardHeader.InnerText = $"Welcome, {datosCliente.NombreUsuario}";
                     usernameLabel.InnerText = datosCliente.NombreUsuario;
-                    List<Tarjetas> tarjetas = (List<Tarjetas>)Session["Tarjetas"];
-                    rptTarjetas.DataSource = tarjetas;
+
+                    // Cargar tarjetas y cuentas
+                    rptTarjetas.DataSource = (List<Tarjetas>)Session["Tarjetas"];
                     rptTarjetas.DataBind();
-                    List<Cuentas> cuentas = (List<Cuentas>)Session["Cuentas"];
-                    rptCuentas.DataSource = cuentas;
+                    rptCuentas.DataSource = (List<Cuentas>)Session["Cuentas"];
                     rptCuentas.DataBind();
                 }
                 else
                 {
-                    ClientScript.RegisterStartupScript(this.GetType(), "alert",
-                        "alert('No se encontraron datos del cliente en la sesión.');", true);
+                    MostrarAlerta("No se encontraron datos del cliente en la sesión.");
                     Response.Redirect("Login.aspx");
                 }
             }
             catch (Exception ex)
             {
-                ClientScript.RegisterStartupScript(this.GetType(), "alert",
-                    $"alert('Error al cargar datos desde la sesión: {ex.Message}');", true);
+                MostrarAlerta($"Error al cargar datos desde la sesión: {ex.Message}");
             }
         }
+
         protected void btnGuardarPerfil_Click(object sender, EventArgs e)
         {
             try
             {
-                string correo = txtEmail.Text.Trim();
-                string nombreUsuario = txtUsuario.Text.Trim();
-                string direccion = txtDireccion.Text.Trim();
-                string telefono = txtTelefono.Text.Trim();
-                if (string.IsNullOrEmpty(correo) || !correo.Contains("@"))
+                // Validar entradas del formulario
+                if (!ValidarCorreo(txtEmail.Text.Trim()) || !ValidarTexto(txtUsuario.Text.Trim(), "nombre de usuario") ||
+                    !ValidarTexto(txtDireccion.Text.Trim(), "dirección") || !ValidarTelefono(txtTelefono.Text.Trim()))
                 {
-                    ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Por favor, ingresa un correo electrónico válido.');", true);
                     return;
                 }
-                if (string.IsNullOrEmpty(nombreUsuario))
-                {
-                    ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Por favor, ingresa un nombre de usuario.');", true);
-                    return;
-                }
-                if (string.IsNullOrEmpty(direccion))
-                {
-                    ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Por favor, ingresa una dirección.');", true);
-                    return;
-                }
-                if (string.IsNullOrEmpty(telefono) || telefono.Length != 8 || !telefono.All(char.IsDigit))
-                {
-                    ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Por favor, ingresa un número de teléfono válido de 10 dígitos.');", true);
-                    return;
-                }
+
                 if (Session["DatosCliente"] != null)
                 {
                     var datosCliente = (DatosCliente)Session["DatosCliente"];
                     long usuarioID = datosCliente.Cedula;
-                    bool exito = ActualizarPerfil(usuarioID, correo, nombreUsuario, direccion, telefono);
 
-                    if (exito)
+                    // Actualizar perfil del usuario
+                    if (ActualizarPerfil(usuarioID, txtEmail.Text.Trim(), txtUsuario.Text.Trim(), txtDireccion.Text.Trim(), txtTelefono.Text.Trim()))
                     {
-                        ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('¡Perfil actualizado exitosamente!');", true);
+                        MostrarAlerta("¡Perfil actualizado exitosamente!");
                     }
                     else
                     {
-                        ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Hubo un problema al actualizar el perfil. Intenta nuevamente.');", true);
+                        MostrarAlerta("Hubo un problema al actualizar el perfil. Intenta nuevamente.");
                     }
                 }
                 else
                 {
-                    ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('No se encontraron datos del usuario en la sesión.');", true);
+                    MostrarAlerta("No se encontraron datos del usuario en la sesión.");
                 }
             }
             catch (Exception ex)
             {
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", $"alert('Error: {ex.Message}');", true);
+                MostrarAlerta($"Error: {ex.Message}");
             }
         }
+
         private bool ActualizarPerfil(long usuarioID, string correo, string nombreUsuario, string direccion, string telefono)
         {
             using (var context = new Easy_Pay_Entities())
@@ -124,6 +112,7 @@ namespace Banca_En_Linea
                 var resultadoParam = new ObjectParameter("Resultado", typeof(int));
                 context.sp_ActualizarCliente(usuarioID, correo, nombreUsuario, direccion, telefono, resultadoParam);
                 int resultado = (int)resultadoParam.Value;
+
                 if (resultado == 1)
                 {
                     ActualizarSesionDatosUsuario(correo);
@@ -132,6 +121,7 @@ namespace Banca_En_Linea
                 return false;
             }
         }
+
         private void ActualizarSesionDatosUsuario(string correo)
         {
             using (var context = new Easy_Pay_Entities())
@@ -139,6 +129,7 @@ namespace Banca_En_Linea
                 var cliente = context.sp_ObtenerClientePorCedula(correo).FirstOrDefault();
                 if (cliente != null)
                 {
+                    // Actualizar datos del cliente en la sesión
                     Session["DatosCliente"] = new DatosCliente
                     {
                         Cedula = cliente.Cedula,
@@ -150,8 +141,9 @@ namespace Banca_En_Linea
                         Direccion = cliente.Direccion ?? "No disponible",
                         Telefono = cliente.Telefono ?? "No disponible"
                     };
-                    var datosCliente = (DatosCliente)Session["DatosCliente"];
-                    CargarDatosUsuario(Convert.ToInt64(datosCliente.Cedula));
+
+                    // Recargar datos del usuario
+                    CargarDatosUsuario(Convert.ToInt64(cliente.Cedula));
                 }
                 else
                 {
@@ -159,92 +151,131 @@ namespace Banca_En_Linea
                 }
             }
         }
+
         protected void btnCambiarContrasena_Click(object sender, EventArgs e)
         {
             try
             {
-                string contrasenaActual = txtContrasenaActual.Text.Trim();
-                string nuevaContrasena = txtNuevaContrasena.Text.Trim();
-                string confirmarContrasena = txtConfirmarContrasena.Text.Trim();
-                if (string.IsNullOrEmpty(contrasenaActual))
+                // Validar entradas de contraseña
+                if (!ValidarTexto(txtContrasenaActual.Text.Trim(), "contraseña actual") ||
+                    !ValidarNuevaContrasena(txtNuevaContrasena.Text.Trim(), txtConfirmarContrasena.Text.Trim()))
                 {
-                    ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Por favor, ingresa tu contraseña actual.');", true);
                     return;
                 }
-                if (string.IsNullOrEmpty(nuevaContrasena) || nuevaContrasena.Length < 6)
-                {
-                    ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('La nueva contraseña debe tener al menos 6 caracteres.');", true);
-                    return;
-                }
-                if (nuevaContrasena != confirmarContrasena)
-                {
-                    ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('La nueva contraseña y la confirmación no coinciden.');", true);
-                    return;
-                }
+
                 if (Session["DatosCliente"] != null)
                 {
                     var datosCliente = (DatosCliente)Session["DatosCliente"];
                     long usuarioID = datosCliente.Cedula;
-                    if (VerificarContrasenaActual(usuarioID, contrasenaActual))
+
+                    // Verificar y cambiar contraseña
+                    if (VerificarContrasenaActual(usuarioID, txtContrasenaActual.Text.Trim()) &&
+                        CambiarContrasena(usuarioID, txtNuevaContrasena.Text.Trim()))
                     {
-                        if (CambiarContrasena(usuarioID, nuevaContrasena))
-                        {
-                            ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('¡Contraseña cambiada exitosamente!');", true);
-                        }
-                        else
-                        {
-                            ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Hubo un problema al cambiar la contraseña. Intenta nuevamente.');", true);
-                        }
+                        MostrarAlerta("¡Contraseña cambiada exitosamente!");
                     }
                     else
                     {
-                        ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('La contraseña actual es incorrecta.');", true);
+                        MostrarAlerta("Hubo un problema al cambiar la contraseña. Intenta nuevamente.");
                     }
                 }
                 else
                 {
-                    ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('No se encontraron datos del usuario en la sesión.');", true);
+                    MostrarAlerta("No se encontraron datos del usuario en la sesión.");
                 }
             }
             catch (Exception ex)
             {
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", $"alert('Error: {ex.Message}');", true);
+                MostrarAlerta($"Error: {ex.Message}");
             }
         }
+
         private bool VerificarContrasenaActual(long usuarioID, string contrasenaActual)
         {
             using (var context = new Easy_Pay_Entities())
             {
                 var resultadoParam = new ObjectParameter("Resultado", typeof(int));
                 context.sp_ConsultarContrasena(usuarioID, contrasenaActual, resultadoParam);
-                int resultado = (int)resultadoParam.Value;
-                return resultado == 1;
+                return (int)resultadoParam.Value == 1;
             }
         }
+
         private bool CambiarContrasena(long usuarioID, string nuevaContrasena)
         {
             using (var context = new Easy_Pay_Entities())
             {
                 var resultadoParam = new ObjectParameter("Resultado", typeof(int));
                 context.sp_CambiarContrasena(usuarioID, nuevaContrasena, resultadoParam);
-                int resultado = (int)resultadoParam.Value;
-                return resultado == 1;
+                return (int)resultadoParam.Value == 1;
             }
         }
+
         private void LlenarCamposPerfil()
         {
-            var datosCliente = (DatosCliente)Session["DatosCliente"];
             if (Session["DatosCliente"] != null)
             {
-                txtEmail.Text = datosCliente.Correo.ToString();
-                txtUsuario.Text = datosCliente.NombreUsuario.ToString();
-                txtDireccion.Text = datosCliente.Direccion.ToString();
-                txtTelefono.Text = datosCliente.Telefono.ToString();
+                var datosCliente = (DatosCliente)Session["DatosCliente"];
+                // Llenar campos del perfil con los datos del cliente
+                txtEmail.Text = datosCliente.Correo;
+                txtUsuario.Text = datosCliente.NombreUsuario;
+                txtDireccion.Text = datosCliente.Direccion;
+                txtTelefono.Text = datosCliente.Telefono;
             }
             else
             {
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('No se encontraron datos del usuario en la sesión.');", true);
+                MostrarAlerta("No se encontraron datos del usuario en la sesión.");
             }
+        }
+
+        // Métodos auxiliares para validaciones y alertas
+        private bool ValidarCorreo(string correo)
+        {
+            if (string.IsNullOrEmpty(correo) || !correo.Contains("@"))
+            {
+                MostrarAlerta("Por favor, ingresa un correo electrónico válido.");
+                return false;
+            }
+            return true;
+        }
+
+        private bool ValidarTexto(string texto, string campo)
+        {
+            if (string.IsNullOrEmpty(texto))
+            {
+                MostrarAlerta($"Por favor, ingresa un {campo}.");
+                return false;
+            }
+            return true;
+        }
+
+        private bool ValidarTelefono(string telefono)
+        {
+            if (string.IsNullOrEmpty(telefono) || telefono.Length != 8 || !telefono.All(char.IsDigit))
+            {
+                MostrarAlerta("Por favor, ingresa un número de teléfono válido de 8 dígitos.");
+                return false;
+            }
+            return true;
+        }
+
+        private bool ValidarNuevaContrasena(string nuevaContrasena, string confirmarContrasena)
+        {
+            if (string.IsNullOrEmpty(nuevaContrasena) || nuevaContrasena.Length < 6)
+            {
+                MostrarAlerta("La nueva contraseña debe tener al menos 6 caracteres.");
+                return false;
+            }
+            if (nuevaContrasena != confirmarContrasena)
+            {
+                MostrarAlerta("La nueva contraseña y la confirmación no coinciden.");
+                return false;
+            }
+            return true;
+        }
+
+        private void MostrarAlerta(string mensaje)
+        {
+            ClientScript.RegisterStartupScript(this.GetType(), "alert", $"alert('{mensaje}');", true);
         }
     }
 }
