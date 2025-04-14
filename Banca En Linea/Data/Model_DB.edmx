@@ -34,6 +34,16 @@
           <Parameter Name="Telefono" Type="varchar" Mode="In" />
           <Parameter Name="Resultado" Type="int" Mode="InOut" />
         </Function>
+        <Function Name="sp_CambiarContrasena" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Cedula" Type="bigint" Mode="In" />
+          <Parameter Name="NuevaContrasena" Type="varchar" Mode="In" />
+          <Parameter Name="Resultado" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="sp_ConsultarContrasena" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Cedula" Type="bigint" Mode="In" />
+          <Parameter Name="Contrasena" Type="varchar" Mode="InOut" />
+          <Parameter Name="Resultado" Type="int" Mode="InOut" />
+        </Function>
         <Function Name="sp_CreateTarjetas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID" Type="int" Mode="In" />
           <Parameter Name="NumeroTarjeta" Type="varchar" Mode="In" />
@@ -123,6 +133,16 @@
             <Parameter Name="NombreUsuario" Mode="In" Type="String" />
             <Parameter Name="Direccion" Mode="In" Type="String" />
             <Parameter Name="Telefono" Mode="In" Type="String" />
+            <Parameter Name="Resultado" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ConsultarContrasena">
+            <Parameter Name="Cedula" Mode="In" Type="Int64" />
+            <Parameter Name="Contrasena" Mode="InOut" Type="String" />
+            <Parameter Name="Resultado" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_CambiarContrasena">
+            <Parameter Name="Cedula" Mode="In" Type="Int64" />
+            <Parameter Name="NuevaContrasena" Mode="In" Type="String" />
             <Parameter Name="Resultado" Mode="InOut" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
@@ -286,6 +306,8 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_ActualizarCliente" FunctionName="Easy_Pay_Model.Store.sp_ActualizarCliente" />
+          <FunctionImportMapping FunctionImportName="sp_ConsultarContrasena" FunctionName="Easy_Pay_Model.Store.sp_ConsultarContrasena" />
+          <FunctionImportMapping FunctionImportName="sp_CambiarContrasena" FunctionName="Easy_Pay_Model.Store.sp_CambiarContrasena" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

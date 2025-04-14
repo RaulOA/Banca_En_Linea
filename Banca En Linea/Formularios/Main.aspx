@@ -12,7 +12,7 @@
                         <div class="row gy-4">
                             <div class="col-12">
                                 <div class="card widget-card border-light shadow-sm">
-                                    <div class="card-header text-bg-primary" id="cardHeader" runat="server">Welcome, Username</div>
+                                    <div class="card-header text-bg-primary" id="cardHeader" runat="server">Bienvenido, Username</div>
                                     <div class="card-body">
                                         <h5 class="text-center mb-1" id="usernameLabel" runat="server">Username</h5>
                                         <p class="text-center text-secondary mb-4">Cuenta personal</p>

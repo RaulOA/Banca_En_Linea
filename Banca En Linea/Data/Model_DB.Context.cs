@@ -218,5 +218,31 @@ namespace Banca_En_Linea.Data
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_ActualizarCliente", cedulaParameter, correoParameter, nombreUsuarioParameter, direccionParameter, telefonoParameter, resultado);
         }
+    
+        public virtual int sp_ConsultarContrasena(Nullable<long> cedula, string contrasena, ObjectParameter resultado)
+        {
+            var cedulaParameter = cedula.HasValue ?
+                new ObjectParameter("Cedula", cedula) :
+                new ObjectParameter("Cedula", typeof(long));
+
+            var nuevaContrasenaParameter = contrasena != null ?
+                new ObjectParameter("ContrasenaIngresada", contrasena) :
+                new ObjectParameter("ContrasenaIngresada", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_ConsultarContrasena", cedulaParameter, nuevaContrasenaParameter, resultado);
+        }
+    
+        public virtual int sp_CambiarContrasena(Nullable<long> cedula, string nuevaContrasena, ObjectParameter resultado)
+        {
+            var cedulaParameter = cedula.HasValue ?
+                new ObjectParameter("Cedula", cedula) :
+                new ObjectParameter("Cedula", typeof(long));
+    
+            var nuevaContrasenaParameter = nuevaContrasena != null ?
+                new ObjectParameter("NuevaContrasena", nuevaContrasena) :
+                new ObjectParameter("NuevaContrasena", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_CambiarContrasena", cedulaParameter, nuevaContrasenaParameter, resultado);
+        }
     }
 }
