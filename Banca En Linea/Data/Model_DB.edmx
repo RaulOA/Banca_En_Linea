@@ -65,11 +65,29 @@
         <Function Name="sp_ObtenerClientePorCedula" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="sp_ObtenerSaldo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Cedula" Type="bigint" Mode="In" />
+          <Parameter Name="Saldo" Type="decimal" Mode="InOut" />
+          <Parameter Name="Resultado" Type="int" Mode="InOut" />
+        </Function>
         <Function Name="sp_TarjtasClientePorCedula" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Cedula" Type="bigint" Mode="In" />
         </Function>
         <Function Name="sp_TicketsPorCedula" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Cedula" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="sp_TransferirSaldo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CedulaRemitente" Type="bigint" Mode="In" />
+          <Parameter Name="CedulaReceptor" Type="bigint" Mode="In" />
+          <Parameter Name="Monto" Type="decimal" Mode="In" />
+          <Parameter Name="Resultado" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="sp_VerificarTelefono" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Telefono" Type="varchar" Mode="In" />
+          <Parameter Name="Cedula" Type="bigint" Mode="InOut" />
+          <Parameter Name="Nombre" Type="varchar" Mode="InOut" />
+          <Parameter Name="Apellido" Type="varchar" Mode="InOut" />
+          <Parameter Name="Resultado" Type="int" Mode="InOut" />
         </Function>
         <Function Name="sp_VerificarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="varchar" Mode="In" />
@@ -151,6 +169,24 @@
           </FunctionImport>
           <FunctionImport Name="sp_CrearCuenta">
             <Parameter Name="Cedula" Mode="In" Type="Int64" />
+            <Parameter Name="Resultado" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_VerificarTelefono">
+            <Parameter Name="Telefono" Mode="In" Type="String" />
+            <Parameter Name="Cedula" Mode="InOut" Type="Int64" />
+            <Parameter Name="Nombre" Mode="InOut" Type="String" />
+            <Parameter Name="Apellido" Mode="InOut" Type="String" />
+            <Parameter Name="Resultado" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_TransferirSaldo">
+            <Parameter Name="CedulaRemitente" Mode="In" Type="Int64" />
+            <Parameter Name="CedulaReceptor" Mode="In" Type="Int64" />
+            <Parameter Name="Monto" Mode="In" Type="Decimal" />
+            <Parameter Name="Resultado" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerSaldo">
+            <Parameter Name="Cedula" Mode="In" Type="Int64" />
+            <Parameter Name="Saldo" Mode="InOut" Type="Decimal" />
             <Parameter Name="Resultado" Mode="InOut" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
@@ -317,6 +353,9 @@
           <FunctionImportMapping FunctionImportName="sp_ConsultarContrasena" FunctionName="Easy_Pay_Model.Store.sp_ConsultarContrasena" />
           <FunctionImportMapping FunctionImportName="sp_CambiarContrasena" FunctionName="Easy_Pay_Model.Store.sp_CambiarContrasena" />
           <FunctionImportMapping FunctionImportName="sp_CrearCuenta" FunctionName="Easy_Pay_Model.Store.sp_CrearCuenta" />
+          <FunctionImportMapping FunctionImportName="sp_VerificarTelefono" FunctionName="Easy_Pay_Model.Store.sp_VerificarTelefono" />
+          <FunctionImportMapping FunctionImportName="sp_TransferirSaldo" FunctionName="Easy_Pay_Model.Store.sp_TransferirSaldo" />
+          <FunctionImportMapping FunctionImportName="sp_ObtenerSaldo" FunctionName="Easy_Pay_Model.Store.sp_ObtenerSaldo" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

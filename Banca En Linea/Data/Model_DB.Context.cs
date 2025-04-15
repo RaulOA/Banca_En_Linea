@@ -27,6 +27,8 @@ namespace Banca_En_Linea.Data
         {
             throw new UnintentionalCodeFirstException();
         }
+    
+    
         public virtual int InsertarCliente(Nullable<long> cedula, string nombre, string apellido, string nombreUsuario, string contrasena, Nullable<System.DateTime> fechaNacimiento, string direccion, string telefono, string correo, byte[] foto, Nullable<System.DateTime> fechaCreacion, Nullable<System.DateTime> fechaModificacion, Nullable<System.DateTime> fechaUltimoIngreso, Nullable<int> pregunta, string respuesta)
         {
             var cedulaParameter = cedula.HasValue ?
@@ -250,6 +252,41 @@ namespace Banca_En_Linea.Data
                 new ObjectParameter("Cedula", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_CrearCuenta", cedulaParameter, resultado);
+        }
+    
+        public virtual int sp_VerificarTelefono(string telefono, ObjectParameter cedula, ObjectParameter nombre, ObjectParameter apellido, ObjectParameter resultado)
+        {
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("Telefono", telefono) :
+                new ObjectParameter("Telefono", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_VerificarTelefono", telefonoParameter, cedula, nombre, apellido, resultado);
+        }
+    
+        public virtual int sp_TransferirSaldo(Nullable<long> cedulaRemitente, Nullable<long> cedulaReceptor, Nullable<decimal> monto, ObjectParameter resultado)
+        {
+            var cedulaRemitenteParameter = cedulaRemitente.HasValue ?
+                new ObjectParameter("CedulaRemitente", cedulaRemitente) :
+                new ObjectParameter("CedulaRemitente", typeof(long));
+    
+            var cedulaReceptorParameter = cedulaReceptor.HasValue ?
+                new ObjectParameter("CedulaReceptor", cedulaReceptor) :
+                new ObjectParameter("CedulaReceptor", typeof(long));
+    
+            var montoParameter = monto.HasValue ?
+                new ObjectParameter("Monto", monto) :
+                new ObjectParameter("Monto", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_TransferirSaldo", cedulaRemitenteParameter, cedulaReceptorParameter, montoParameter, resultado);
+        }
+    
+        public virtual int sp_ObtenerSaldo(Nullable<long> cedula, ObjectParameter saldo, ObjectParameter resultado)
+        {
+            var cedulaParameter = cedula.HasValue ?
+                new ObjectParameter("Cedula", cedula) :
+                new ObjectParameter("Cedula", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_ObtenerSaldo", cedulaParameter, saldo, resultado);
         }
     }
 }

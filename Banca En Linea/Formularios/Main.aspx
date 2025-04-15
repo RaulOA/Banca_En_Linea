@@ -267,8 +267,8 @@
 
                                             <!-- Botón para enviar la transferencia -->
                                             <div class="col-12">
-                                                <%--<asp:Button ID="btnTransferirSaldo" runat="server" Text="Transferir Saldo"
-                                                    CssClass="btn btn-primary" OnClick="btnTransferirSaldo_Click" />--%>
+                                                <asp:Button ID="btnTransferirSaldo" runat="server" Text="Transferir Saldo"
+                                                    CssClass="btn btn-primary" OnClick="btnTransferirSaldo_Click" />
                                             </div>
                                         </div>
                                     </div>

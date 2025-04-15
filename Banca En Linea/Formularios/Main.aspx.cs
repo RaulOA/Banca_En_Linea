@@ -305,5 +305,84 @@ namespace Banca_En_Linea
         {
             ClientScript.RegisterStartupScript(this.GetType(), "alert", $"alert('{mensaje}');", true);
         }
+
+        protected void btnTransferirSaldo_Click(object sender, EventArgs e)
+        {
+            // Validar campos obligatorios
+            string telefonoReceptor = txtTelefonoReceptor.Text.Trim();
+            string contrasenaUsuario = txtContrasenaUsuario.Text.Trim();
+            string montoTexto = txtSaldoTransferir.Text.Trim();
+
+            if (string.IsNullOrEmpty(telefonoReceptor) || string.IsNullOrEmpty(contrasenaUsuario) || string.IsNullOrEmpty(montoTexto))
+            {
+                MostrarAlerta("Todos los campos son obligatorios.");
+                return;
+            }
+
+            // Validar monto numérico
+            if (!decimal.TryParse(montoTexto, out decimal montoTransferir) || montoTransferir <= 0)
+            {
+                MostrarAlerta("Por favor, ingresa un monto válido para transferir.");
+                return;
+            }
+
+            using (var context = new Easy_Pay_Entities())
+            {
+                // Verificar existencia del receptor
+                var resultadoParam = new ObjectParameter("Resultado", typeof(int));
+                var cedulaReceptorParam = new ObjectParameter("Cedula", typeof(long));
+
+                context.sp_VerificarTelefono(telefonoReceptor, cedulaReceptorParam, new ObjectParameter("Nombre", typeof(string)), new ObjectParameter("Apellido", typeof(string)), resultadoParam);
+
+                if ((int)resultadoParam.Value != 1)
+                {
+                    MostrarAlerta("El número de teléfono del receptor no es válido.");
+                    return;
+                }
+
+                // Obtener cédula del remitente
+                var cedulaCliente = ((DatosCliente)Session["DatosCliente"]).Cedula;
+                long cedulaReceptor = (long)cedulaReceptorParam.Value;
+
+                // Ejecutar la transferencia de saldo
+                var resultadoTransferenciaParam = new ObjectParameter("ResultadoTransferencia", typeof(int));
+                context.sp_TransferirSaldo(cedulaCliente, cedulaReceptor, montoTransferir, resultadoTransferenciaParam);
+
+                int resultadoTransferencia = (int)resultadoTransferenciaParam.Value;
+
+                switch (resultadoTransferencia)
+                {
+                    case 1:
+                        // Actualizar saldo en sesión
+                        var cuentas = (List<Cuentas>)Session["Cuentas"];
+                        var cuenta = cuentas.FirstOrDefault(c => c.Cedula == cedulaCliente);
+
+                        if (cuenta != null)
+                        {
+                            cuenta.Saldo -= montoTransferir;
+                            Session["Cuentas"] = cuentas;
+                        }
+
+                        MostrarAlerta("Transferencia realizada exitosamente.");
+                        break;
+
+                    case 0:
+                        MostrarAlerta("Saldo insuficiente para realizar la transferencia.");
+                        break;
+
+                    case -1:
+                        MostrarAlerta("No se encontró la cuenta del remitente.");
+                        break;
+
+                    case -2:
+                        MostrarAlerta("No se encontró la cuenta del receptor.");
+                        break;
+
+                    default:
+                        MostrarAlerta("Hubo un problema al realizar la transferencia. Intenta nuevamente.");
+                        break;
+                }
+            }
+        }
     }
 }
