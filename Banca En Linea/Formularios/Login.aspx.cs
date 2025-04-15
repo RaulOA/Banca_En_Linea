@@ -14,11 +14,10 @@ namespace Banca_En_Linea
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
         protected void BtnLogin_Click(object sender, EventArgs e)
         {
-            // Obtener los datos del formulario
+            // Obtener los datos del formulariow
             string usuario = txtEmail.Text;
             string contrasena = txtContrasena.Text;
             // habilitar la visualizacion del mensaje de error en caso de que exista uno y mostrar el mensaje, o caso contrario insertar el cliente

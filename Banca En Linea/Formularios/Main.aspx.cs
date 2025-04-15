@@ -17,7 +17,7 @@ namespace Banca_En_Linea
                 {
                     // Obtener la cédula desde la sesión y cargar los datos del usuario  
                     var datosCliente = (DatosCliente)Session["DatosCliente"];
-                    CargarDatosUsuario(Convert.ToInt64(datosCliente.Cedula));
+                    CargarDatosUsuario();
                     // Llenar los campos del perfil en caso de no postback  
                     LlenarCamposPerfil();
                 }
@@ -29,7 +29,7 @@ namespace Banca_En_Linea
             }
         }
 
-        private void CargarDatosUsuario(long usuarioID)
+        private void CargarDatosUsuario()
         {
             try
             {
@@ -137,7 +137,7 @@ namespace Banca_En_Linea
                     };
 
                     // Recargar datos del usuario
-                    CargarDatosUsuario(Convert.ToInt64(cliente.Cedula));
+                    CargarDatosUsuario();
                 }
                 else
                 {
@@ -304,9 +304,90 @@ namespace Banca_En_Linea
             ClientScript.RegisterStartupScript(this.GetType(), "alert", $"alert('{mensaje}');", true);
         }
 
+        //protected void btnTransferirSaldo_Click(object sender, EventArgs e)
+        //{
+        //    // Validar campos obligatorios
+        //    string telefonoReceptor = txtTelefonoReceptor.Text.Trim();
+        //    string contrasenaUsuario = txtContrasenaUsuario.Text.Trim();
+        //    string montoTexto = txtSaldoTransferir.Text.Trim();
+
+        //    if (string.IsNullOrEmpty(telefonoReceptor) || string.IsNullOrEmpty(contrasenaUsuario) || string.IsNullOrEmpty(montoTexto))
+        //    {
+        //        MostrarAlerta("Todos los campos son obligatorios.");
+        //        return;
+        //    }
+
+        //    // Validar monto numérico
+        //    if (!decimal.TryParse(montoTexto, out decimal montoTransferir) || montoTransferir <= 0)
+        //    {
+        //        MostrarAlerta("Por favor, ingresa un monto válido para transferir.");
+        //        return;
+        //    }
+
+
+
+        //    using (var context = new Easy_Pay_Entities())
+        //    {
+        //        // Verificar existencia del receptor
+        //        var resultadoParam = new ObjectParameter("Resultado", typeof(int));
+        //        var cedulaReceptorParam = new ObjectParameter("Cedula", typeof(long));
+
+        //        context.sp_VerificarTelefono(telefonoReceptor, cedulaReceptorParam, new ObjectParameter("Nombre", typeof(string)), new ObjectParameter("Apellido", typeof(string)), resultadoParam);
+
+        //        if ((int)resultadoParam.Value != 1)
+        //        {
+        //            MostrarAlerta("El número de teléfono del receptor no es válido.");
+        //            return;
+        //        }
+
+        //        // Obtener cédula del remitente
+        //        var datosCliente = (DatosCliente)Session["DatosCliente"];
+        //        long cedulaCliente = datosCliente.Cedula;
+        //        long cedulaReceptor = (long)cedulaReceptorParam.Value;
+
+        //        // Ejecutar la transferencia de saldo
+
+        //        var resultadoTransferenciaParam = new ObjectParameter("Resultado", typeof(int));
+        //        context.sp_TransferirSaldo(cedulaCliente, cedulaReceptor, montoTransferir, resultadoTransferenciaParam);
+
+        //        int resultadoTransferencia = (int)resultadoTransferenciaParam.Value;
+
+        //        switch (resultadoTransferencia)
+        //        {
+        //            case 1:
+        //                // Actualizar saldo en sesión
+        //                var cuentas = (List<Cuentas>)Session["Cuentas"];
+        //                if (cuentas != null && cuentas.Any())
+        //                {
+        //                    // Seleccionar la primera cuenta o una específica según sea necesario
+        //                    var cuenta = cuentas.First();
+        //                    cuenta.Saldo -= montoTransferir;
+        //                    Session["Cuentas"] = cuentas;
+        //                }
+
+        //                MostrarAlerta("Transferencia realizada exitosamente.");
+        //                break;
+
+        //            case 0:
+        //                MostrarAlerta("Saldo insuficiente para realizar la transferencia.");
+        //                break;
+
+        //            case -1:
+        //                MostrarAlerta("No se encontró la cuenta del remitente.");
+        //                break;
+
+        //            case -2:
+        //                MostrarAlerta("No se encontró la cuenta del receptor.");
+        //                break;
+
+        //            default:
+        //                MostrarAlerta("Hubo un problema al realizar la transferencia. Intenta nuevamente.");
+        //                break;
+        //        }
+        //    }
+
         protected void btnTransferirSaldo_Click(object sender, EventArgs e)
         {
-            // Validar campos obligatorios
             string telefonoReceptor = txtTelefonoReceptor.Text.Trim();
             string contrasenaUsuario = txtContrasenaUsuario.Text.Trim();
             string montoTexto = txtSaldoTransferir.Text.Trim();
@@ -317,7 +398,6 @@ namespace Banca_En_Linea
                 return;
             }
 
-            // Validar monto numérico
             if (!decimal.TryParse(montoTexto, out decimal montoTransferir) || montoTransferir <= 0)
             {
                 MostrarAlerta("Por favor, ingresa un monto válido para transferir.");
@@ -326,11 +406,12 @@ namespace Banca_En_Linea
 
             using (var context = new Easy_Pay_Entities())
             {
-                // Verificar existencia del receptor
                 var resultadoParam = new ObjectParameter("Resultado", typeof(int));
                 var cedulaReceptorParam = new ObjectParameter("Cedula", typeof(long));
+                var nombreParam = new ObjectParameter("Nombre", typeof(string));
+                var apellidoParam = new ObjectParameter("Apellido", typeof(string));
 
-                context.sp_VerificarTelefono(telefonoReceptor, cedulaReceptorParam, new ObjectParameter("Nombre", typeof(string)), new ObjectParameter("Apellido", typeof(string)), resultadoParam);
+                context.sp_VerificarTelefono(telefonoReceptor, cedulaReceptorParam, nombreParam, apellidoParam, resultadoParam);
 
                 if ((int)resultadoParam.Value != 1)
                 {
@@ -338,46 +419,108 @@ namespace Banca_En_Linea
                     return;
                 }
 
-                // Obtener cédula del remitente
+                //string nombreReceptor = $"{nombreParam.Value} {apellidoParam.Value}";
+                //if (!ConfirmarAccion($"¿Deseas transferir {montoTransferir:C} a {nombreReceptor}?"))
+                //{
+                //    return;
+                //}
+
                 var datosCliente = (DatosCliente)Session["DatosCliente"];
                 long cedulaCliente = datosCliente.Cedula;
+                string correoCliente = datosCliente.Correo;
                 long cedulaReceptor = (long)cedulaReceptorParam.Value;
 
-                // Ejecutar la transferencia de saldo
-                var resultadoTransferenciaParam = new ObjectParameter("ResultadoTransferencia", typeof(int));
+                var resultadoTransferenciaParam = new ObjectParameter("Resultado", typeof(int));
                 context.sp_TransferirSaldo(cedulaCliente, cedulaReceptor, montoTransferir, resultadoTransferenciaParam);
 
-                int resultadoTransferencia = (int)resultadoTransferenciaParam.Value;
-
-                switch (resultadoTransferencia)
+                switch ((int)resultadoTransferenciaParam.Value)
                 {
                     case 1:
-                        // Actualizar saldo en sesión
-                        var cuenta = (Cuentas)Session["Cuentas"];
-                        if (cuenta != null)
-                        {
-                            cuenta.Saldo -= montoTransferir;
-                            Session["Cuentas"] = cuenta;
-                        }
-
+                        ActualizarSesionDatosCliente(correoCliente);
+                        CargarDatosUsuario();
                         MostrarAlerta("Transferencia realizada exitosamente.");
                         break;
-
                     case 0:
                         MostrarAlerta("Saldo insuficiente para realizar la transferencia.");
                         break;
-
                     case -1:
                         MostrarAlerta("No se encontró la cuenta del remitente.");
                         break;
-
                     case -2:
                         MostrarAlerta("No se encontró la cuenta del receptor.");
                         break;
-
                     default:
                         MostrarAlerta("Hubo un problema al realizar la transferencia. Intenta nuevamente.");
                         break;
+                }
+            }
+        }
+        private bool ConfirmarAccion(string mensaje)
+        {
+            // Mostrar un cuadro de confirmación al usuario y devolver el resultado
+            return Request.Form["__EVENTTARGET"] == "confirm" && Request.Form["__EVENTARGUMENT"] == mensaje;
+        }
+        
+        private void ActualizarSesionDatosCliente(string correo)
+        {
+            using (Easy_Pay_Entities entities = new Easy_Pay_Entities())
+            {
+                // Obtener los datos del cliente
+                var cliente = entities.sp_ObtenerClientePorCedula(correo).FirstOrDefault();
+
+                if (cliente != null)
+                {
+                    // Obtener las tarjetas, cuentas, tickets y movimientos del cliente
+                    var tarjetasList = entities.sp_TarjtasClientePorCedula(cliente.Cedula)
+                        .Select(c => new Tarjetas
+                        {
+                            NumeroTarjeta = c.NumeroTarjeta,
+                            tarjetaCVV = c.CVV,
+                            FechaVencimiento = c.FechaVencimiento,
+                            TarjetaID = c.ID
+                        }).ToList();
+
+                    var cuentasList = entities.sp_CuentasClientePorCedula(cliente.Cedula)
+                        .Select(c => new Cuentas
+                        {
+                            NumeroCuenta = c.NumeroDeCuenta,
+                            Saldo = c.Saldo,
+                            Moneda = "Colones"
+                        }).ToList();
+
+                    var movimientosList = entities.sp_MovimientosPorCedula(cliente.Cedula).ToList();
+                    var ticketsList = entities.sp_TicketsPorCedula(cliente.Cedula).ToList();
+
+                    // Actualizar la sesión con los datos del cliente
+                    Session["DatosCliente"] = new DatosCliente
+                    {
+                        Cedula = cliente.Cedula,
+                        Nombre = cliente.Nombre,
+                        Apellido = cliente.Apellido,
+                        NombreUsuario = cliente.NombreUsuario,
+                        Correo = cliente.Correo,
+                        FechaNacimiento = cliente.FechaNacimiento ?? DateTime.MinValue,
+                        Direccion = cliente.Direccion ?? "No disponible",
+                        Telefono = cliente.Telefono ?? "No disponible",
+                        cuentaSaldo = cuentasList.FirstOrDefault()?.Saldo ?? 0.0m,
+                        TipoCuenta = cuentasList.FirstOrDefault()?.TipoCuenta ?? "No disponible",
+                        NumeroDeCuenta = cuentasList.FirstOrDefault()?.NumeroCuenta ?? "Sin cuenta",
+                        MonedaID = cuentasList.FirstOrDefault()?.MonedaID ?? 0,
+                        MovimientosMonto = movimientosList.FirstOrDefault()?.Monto ?? 0.0m,
+                        FechaMovimiento = movimientosList.FirstOrDefault()?.FechaMovimiento ?? DateTime.MinValue,
+                        CatalogoMovimientoID = movimientosList.FirstOrDefault()?.CatalogoMovimientosID ?? 0,
+                        CuantaMoviendoID = movimientosList.FirstOrDefault()?.CuentaID ?? 0
+                    };
+
+                    Session["Tarjetas"] = tarjetasList;
+                    Session["Cuentas"] = cuentasList;
+                }
+                else
+                {
+                    // Si no se encuentra el cliente, limpiar la sesión
+                    Session["DatosCliente"] = null;
+                    Session["Tarjetas"] = null;
+                    Session["Cuentas"] = null;
                 }
             }
         }

@@ -13,5 +13,15 @@ namespace Banca_En_Linea
         {
 
         }
+
+        protected void btnCerrarSesion_Click(object sender, EventArgs e)
+        {
+            // Limpiar la sesión
+            Session.Clear();
+            Session.Abandon();
+
+            // Redirigir al login
+            Response.Redirect("~/Formularios/Login.aspx");
+        }
     }
 }
