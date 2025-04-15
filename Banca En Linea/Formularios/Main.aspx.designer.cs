@@ -15,24 +15,6 @@ namespace Banca_En_Linea
     {
 
         /// <summary>
-        /// Control cardHeader.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl cardHeader;
-
-        /// <summary>
-        /// Control usernameLabel.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl usernameLabel;
-
-        /// <summary>
         /// Control Cuentatab.
         /// </summary>
         /// <remarks>

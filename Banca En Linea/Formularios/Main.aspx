@@ -7,42 +7,6 @@
         <section class="bg-light py-3 py-md-5 py-xl-8">
             <div class="container">
                 <div class="row gy-4 gy-lg-0">
-                    <!-- Columna izquierda - Perfil -->
-                    <div class="col-12 col-lg-4 col-xl-3">
-                        <div class="row gy-4">
-                            <div class="col-12">
-                                <div class="card widget-card border-light shadow-sm">
-                                    <div class="card-header text-bg-primary" id="cardHeader" runat="server">Bienvenido, Username</div>
-                                    <div class="card-body">
-                                        <h5 class="text-center mb-1" id="usernameLabel" runat="server">Username</h5>
-                                        <p class="text-center text-secondary mb-4">Cuenta personal</p>
-                                        <ul class="list-group list-group-flush mb-4">
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <h6 class="m-0">Cartera</h6>
-                                                <span>$0.00 USD</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="card widget-card border-light shadow-sm">
-                                    <div class="card-header text-bg-primary">About Me</div>
-                                    <div class="card-body">
-                                        <ul class="list-group list-group-flush mb-0">
-                                            <li class="list-group-item">
-                                                <h6 class="mb-1">
-                                                    <span class="bi bi-geo-alt-fill me-2"></span>
-                                                    Ubicación
-                                                </h6>
-                                                <span></span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                     <!-- Columna derecha - Contenido -->
                     <div class="col-12 col-lg-8 col-xl-9">
@@ -121,7 +85,7 @@
                                                 <ItemTemplate>
                                                     <div class="col-sm-12 col-md-4">
                                                         <div class="card">
-                                                            <div class="card-body">
+                                                            <div class="card-body text-center">
                                                                 <h5 class="card-title">Tarjeta <%# Container.ItemIndex + 1 %></h5>
                                                                 <p class="card-text">
                                                                     Número de Tarjeta: <%# Eval("NumeroTarjeta") %><br />
@@ -132,6 +96,13 @@
                                                     </div>
                                                 </ItemTemplate>
                                             </asp:Repeater>
+
+                                            <!-- Botón de redirección a la página de agregar tarjeta -->
+                                            <div class="col-sm-12 col-md-4">
+                                                <a href="/Formularios/AddTarjeta.aspx" class="btn btn-outline-primary w-100 text-center" style="height: 100%; display: flex; align-items: center; justify-content: center;">
+                                                    <h1>+</h1>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
 

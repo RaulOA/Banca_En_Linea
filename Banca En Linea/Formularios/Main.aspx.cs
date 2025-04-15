@@ -43,8 +43,6 @@ namespace Banca_En_Linea
                     lblUsuario.Text = datosCliente.NombreUsuario;
                     lblDireccion.Text = datosCliente.Direccion;
                     lblTelefono.Text = datosCliente.Telefono;
-                    cardHeader.InnerText = $"Welcome, {datosCliente.NombreUsuario}";
-                    usernameLabel.InnerText = datosCliente.NombreUsuario;
 
                     // Cargar tarjetas y cuentas
                     rptTarjetas.DataSource = (List<Tarjetas>)Session["Tarjetas"];
@@ -341,7 +339,8 @@ namespace Banca_En_Linea
                 }
 
                 // Obtener cédula del remitente
-                var cedulaCliente = ((DatosCliente)Session["DatosCliente"]).Cedula;
+                var datosCliente = (DatosCliente)Session["DatosCliente"];
+                long cedulaCliente = datosCliente.Cedula;
                 long cedulaReceptor = (long)cedulaReceptorParam.Value;
 
                 // Ejecutar la transferencia de saldo
@@ -354,13 +353,11 @@ namespace Banca_En_Linea
                 {
                     case 1:
                         // Actualizar saldo en sesión
-                        var cuentas = (List<Cuentas>)Session["Cuentas"];
-                        var cuenta = cuentas.FirstOrDefault(c => c.Cedula == cedulaCliente);
-
+                        var cuenta = (Cuentas)Session["Cuentas"];
                         if (cuenta != null)
                         {
                             cuenta.Saldo -= montoTransferir;
-                            Session["Cuentas"] = cuentas;
+                            Session["Cuentas"] = cuenta;
                         }
 
                         MostrarAlerta("Transferencia realizada exitosamente.");

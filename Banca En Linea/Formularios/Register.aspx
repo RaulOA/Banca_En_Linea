@@ -139,14 +139,13 @@
                                                             <asp:Label ID="LblError" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
                                                         </div>
                                                     </div>
-
                                                 </div>
 
                                                 <!-- Enlace de inicio de sesión -->
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <p class="mb-0 mt-5 text-secondary text-center">
-                                                            ¿Ya estás registrado? <a href="#!" class="link-primary text-decoration-none">Ingresar</a>
+                                                            ¿Ya estás registrado? <a href="/Formularios/Login.aspx" class="link-primary text-decoration-none">Ingresa</a>
                                                         </p>
                                                     </div>
                                                 </div>
