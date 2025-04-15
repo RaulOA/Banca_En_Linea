@@ -78,6 +78,15 @@ namespace Banca_En_Linea
         protected global::System.Web.UI.HtmlControls.HtmlButton passwordtab;
 
         /// <summary>
+        /// Control residuetab.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton residuetab;
+
+        /// <summary>
         /// Control rptCuentas.
         /// </summary>
         /// <remarks>
@@ -238,5 +247,32 @@ namespace Banca_En_Linea
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCambiarContrasena;
+
+        /// <summary>
+        /// Control txtTelefonoReceptor.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtTelefonoReceptor;
+
+        /// <summary>
+        /// Control txtContrasenaUsuario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtContrasenaUsuario;
+
+        /// <summary>
+        /// Control txtSaldoTransferir.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSaldoTransferir;
     }
 }

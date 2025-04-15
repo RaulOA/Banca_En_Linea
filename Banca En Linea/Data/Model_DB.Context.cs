@@ -27,8 +27,6 @@ namespace Banca_En_Linea.Data
         {
             throw new UnintentionalCodeFirstException();
         }
-    
-    
         public virtual int InsertarCliente(Nullable<long> cedula, string nombre, string apellido, string nombreUsuario, string contrasena, Nullable<System.DateTime> fechaNacimiento, string direccion, string telefono, string correo, byte[] foto, Nullable<System.DateTime> fechaCreacion, Nullable<System.DateTime> fechaModificacion, Nullable<System.DateTime> fechaUltimoIngreso, Nullable<int> pregunta, string respuesta)
         {
             var cedulaParameter = cedula.HasValue ?
@@ -219,17 +217,17 @@ namespace Banca_En_Linea.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_ActualizarCliente", cedulaParameter, correoParameter, nombreUsuarioParameter, direccionParameter, telefonoParameter, resultado);
         }
     
-        public virtual int sp_ConsultarContrasena(Nullable<long> cedula, string contrasena, ObjectParameter resultado)
+        public virtual int sp_ConsultarContrasena(Nullable<long> cedula, string contrasenaIngresada, ObjectParameter resultado)
         {
             var cedulaParameter = cedula.HasValue ?
                 new ObjectParameter("Cedula", cedula) :
                 new ObjectParameter("Cedula", typeof(long));
-
-            var nuevaContrasenaParameter = contrasena != null ?
-                new ObjectParameter("ContrasenaIngresada", contrasena) :
+    
+            var contrasenaIngresadaParameter = contrasenaIngresada != null ?
+                new ObjectParameter("ContrasenaIngresada", contrasenaIngresada) :
                 new ObjectParameter("ContrasenaIngresada", typeof(string));
-
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_ConsultarContrasena", cedulaParameter, nuevaContrasenaParameter, resultado);
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_ConsultarContrasena", cedulaParameter, contrasenaIngresadaParameter, resultado);
         }
     
         public virtual int sp_CambiarContrasena(Nullable<long> cedula, string nuevaContrasena, ObjectParameter resultado)
@@ -243,6 +241,15 @@ namespace Banca_En_Linea.Data
                 new ObjectParameter("NuevaContrasena", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_CambiarContrasena", cedulaParameter, nuevaContrasenaParameter, resultado);
+        }
+    
+        public virtual int sp_CrearCuenta(Nullable<long> cedula, ObjectParameter resultado)
+        {
+            var cedulaParameter = cedula.HasValue ?
+                new ObjectParameter("Cedula", cedula) :
+                new ObjectParameter("Cedula", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_CrearCuenta", cedulaParameter, resultado);
         }
     }
 }

@@ -80,6 +80,12 @@
                                             Editar contraseña
                                         </button>
                                     </li>
+                                    <!-- Pestaña de Editar Contraseña -->
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="residuetab" data-bs-toggle="tab" data-bs-target="#residuetabpane" type="button" role="tab" aria-controls="residuetabpane" aria-selected="false" runat="server">
+                                            Transferir Saldo
+                                        </button>
+                                    </li>
                                 </ul>
 
                                 <!-- Contenido de pestañas -->
@@ -137,42 +143,54 @@
                                                 <div class="p-2">Nombre Completo</div>
                                             </div>
                                             <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                                <div class="p-2"><asp:Label ID="lblNombreCompleto" runat="server" /></div>
+                                                <div class="p-2">
+                                                    <asp:Label ID="lblNombreCompleto" runat="server" />
+                                                </div>
                                             </div>
-                                            
+
                                             <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
                                                 <div class="p-2">Email</div>
                                             </div>
                                             <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                                <div class="p-2"><asp:Label ID="lblEmail" runat="server" /></div>
+                                                <div class="p-2">
+                                                    <asp:Label ID="lblEmail" runat="server" />
+                                                </div>
                                             </div>
-                                            
+
                                             <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
                                                 <div class="p-2">Fecha de nacimiento</div>
                                             </div>
                                             <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                                <div class="p-2"><asp:Label ID="lblFechaNacimiento" runat="server" /></div>
+                                                <div class="p-2">
+                                                    <asp:Label ID="lblFechaNacimiento" runat="server" />
+                                                </div>
                                             </div>
-                                            
+
                                             <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
                                                 <div class="p-2">Usuario</div>
                                             </div>
                                             <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                                <div class="p-2"><asp:Label ID="lblUsuario" runat="server" /></div>
+                                                <div class="p-2">
+                                                    <asp:Label ID="lblUsuario" runat="server" />
+                                                </div>
                                             </div>
-                                            
+
                                             <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
                                                 <div class="p-2">Dirección</div>
                                             </div>
                                             <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                                <div class="p-2"><asp:Label ID="lblDireccion" runat="server" /></div>
+                                                <div class="p-2">
+                                                    <asp:Label ID="lblDireccion" runat="server" />
+                                                </div>
                                             </div>
-                                            
+
                                             <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
                                                 <div class="p-2">Teléfono</div>
                                             </div>
                                             <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                                <div class="p-2"><asp:Label ID="lblTelefono" runat="server" /></div>
+                                                <div class="p-2">
+                                                    <asp:Label ID="lblTelefono" runat="server" />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -197,7 +215,7 @@
                                                 <asp:TextBox ID="txtTelefono" runat="server" CssClass="form-control"></asp:TextBox>
                                             </div>
                                             <div class="col-12">
-                                                <asp:Button ID="btnGuardarPerfil" runat="server" Text="Guardar Cambios" 
+                                                <asp:Button ID="btnGuardarPerfil" runat="server" Text="Guardar Cambios"
                                                     CssClass="btn btn-primary" OnClick="btnGuardarPerfil_Click" />
                                             </div>
                                             <asp:Label ID="lblMensaje" runat="server" CssClass="alert" />
@@ -220,12 +238,44 @@
                                                 <asp:TextBox ID="txtConfirmarContrasena" runat="server" TextMode="Password" CssClass="form-control"></asp:TextBox>
                                             </div>
                                             <div class="col-12">
-                                                <asp:Button ID="btnCambiarContrasena" runat="server" Text="Cambiar Contraseña" 
+                                                <asp:Button ID="btnCambiarContrasena" runat="server" Text="Cambiar Contraseña"
                                                     CssClass="btn btn-primary" OnClick="btnCambiarContrasena_Click" />
                                             </div>
                                         </div>
                                     </div>
-                                </div><!-- Fin tab-content -->
+
+                                    <!-- Pestaña de Transferir Saldo -->
+                                    <div class="tab-pane fade" id="residuetabpane" role="tabpanel" aria-labelledby="residuetab" tabindex="0">
+                                        <div class="row gy-3 gy-xxl-4">
+                                            <!-- Campo para ingresar el número de teléfono del receptor -->
+                                            <div class="col-12">
+                                                <label class="form-label">Número de Teléfono del Receptor</label>
+                                                <asp:TextBox ID="txtTelefonoReceptor" runat="server" TextMode="SingleLine" CssClass="form-control"></asp:TextBox>
+                                            </div>
+
+                                            <!-- Campo para ingresar la contraseña del usuario -->
+                                            <div class="col-12">
+                                                <label class="form-label">Ingrese su Contraseña</label>
+                                                <asp:TextBox ID="txtContrasenaUsuario" runat="server" TextMode="Password" CssClass="form-control"></asp:TextBox>
+                                            </div>
+
+                                            <!-- Campo para ingresar el saldo a transferir -->
+                                            <div class="col-12">
+                                                <label class="form-label">Monto a Transferir</label>
+                                                <asp:TextBox ID="txtSaldoTransferir" runat="server" TextMode="SingleLine" CssClass="form-control"></asp:TextBox>
+                                            </div>
+
+                                            <!-- Botón para enviar la transferencia -->
+                                            <div class="col-12">
+                                                <%--<asp:Button ID="btnTransferirSaldo" runat="server" Text="Transferir Saldo"
+                                                    CssClass="btn btn-primary" OnClick="btnTransferirSaldo_Click" />--%>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <!-- Fin tab-content -->
                             </div>
                         </div>
                     </div>

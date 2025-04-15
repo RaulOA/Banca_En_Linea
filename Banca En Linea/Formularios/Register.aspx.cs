@@ -1,6 +1,8 @@
 ﻿using Banca_En_Linea.Data;
 using System;
+using System.Data.Objects;
 using System.Linq;
+using System.Web.Services.Description;
 using System.Web.UI;
 
 namespace Banca_En_Linea
@@ -51,15 +53,21 @@ namespace Banca_En_Linea
                 // Aquí debes manejar la inserción de los datos en tu base de datos, incluyendo la lógica necesaria
                 using (var context = new Easy_Pay_Entities())
                 {
-                    context.InsertarCliente(string.IsNullOrWhiteSpace(cedula) ? 0 : Convert.ToInt64(cedula), nombre, apellido, usuario, contrasena, fechaNacimiento, direccion, telefono, correo, null, fechaCreacion, fechaModificacion, fechaUltimoIngreso, preguntaSeguridad,respuestaSeguridad);
-                    // si la insercion del cliente es exitosa, se debe mostrar un mensaje emergente con un boton de aceptar, boton el cual luego de ser precionado debe redirigir a la pagina de login
-                    string script = "alert('Registro exitoso.'); window.location.href='Login.aspx';";
-                    ScriptManager.RegisterStartupScript(this, GetType(), "alert", script, true);
-                    Response.Redirect("Login.aspx");
+                    context.InsertarCliente(string.IsNullOrWhiteSpace(cedula) ? 0 : Convert.ToInt64(cedula), nombre, apellido, usuario, contrasena, fechaNacimiento, direccion, telefono, correo, null, fechaCreacion, fechaModificacion, fechaUltimoIngreso, preguntaSeguridad, respuestaSeguridad);
+                    var resultadoParam = new ObjectParameter("Resultado", typeof(int));
+                    context.sp_CrearCuenta(string.IsNullOrWhiteSpace(cedula) ? 0 : Convert.ToInt64(cedula), resultadoParam);
+                    int resultado = (int)resultadoParam.Value;
+                    if (resultado == 1)
+                    {
+                        MostrarAlerta("Registro exitoso.");
+                        Response.Redirect("Login.aspx");
+                    }
+                    else
+                    {
+                        MostrarAlerta("Error al registrar la cuenta.");
+                    }
                 }
-
             }
-
         }
 
         private string ValidarFormulario(string cedula, string nombre, string apellido, string contrasena, string confirmacion, DateTime fechaNacimiento, string direccion, string telefono, string correo, string respuestaSeguridad)
@@ -240,7 +248,10 @@ namespace Banca_En_Linea
             return true;
         }
 
-
+        private void MostrarAlerta(string mensaje)
+        {
+            ClientScript.RegisterStartupScript(this.GetType(), "alert", $"alert('{mensaje}');", true);
+        }
 
     }
 }

@@ -41,7 +41,11 @@
         </Function>
         <Function Name="sp_ConsultarContrasena" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Cedula" Type="bigint" Mode="In" />
-          <Parameter Name="Contrasena" Type="varchar" Mode="InOut" />
+          <Parameter Name="ContrasenaIngresada" Type="varchar" Mode="In" />
+          <Parameter Name="Resultado" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="sp_CrearCuenta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Cedula" Type="bigint" Mode="In" />
           <Parameter Name="Resultado" Type="int" Mode="InOut" />
         </Function>
         <Function Name="sp_CreateTarjetas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -137,12 +141,16 @@
           </FunctionImport>
           <FunctionImport Name="sp_ConsultarContrasena">
             <Parameter Name="Cedula" Mode="In" Type="Int64" />
-            <Parameter Name="Contrasena" Mode="InOut" Type="String" />
+            <Parameter Name="ContrasenaIngresada" Mode="In" Type="String" />
             <Parameter Name="Resultado" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_CambiarContrasena">
             <Parameter Name="Cedula" Mode="In" Type="Int64" />
             <Parameter Name="NuevaContrasena" Mode="In" Type="String" />
+            <Parameter Name="Resultado" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_CrearCuenta">
+            <Parameter Name="Cedula" Mode="In" Type="Int64" />
             <Parameter Name="Resultado" Mode="InOut" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
@@ -308,6 +316,7 @@
           <FunctionImportMapping FunctionImportName="sp_ActualizarCliente" FunctionName="Easy_Pay_Model.Store.sp_ActualizarCliente" />
           <FunctionImportMapping FunctionImportName="sp_ConsultarContrasena" FunctionName="Easy_Pay_Model.Store.sp_ConsultarContrasena" />
           <FunctionImportMapping FunctionImportName="sp_CambiarContrasena" FunctionName="Easy_Pay_Model.Store.sp_CambiarContrasena" />
+          <FunctionImportMapping FunctionImportName="sp_CrearCuenta" FunctionName="Easy_Pay_Model.Store.sp_CrearCuenta" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

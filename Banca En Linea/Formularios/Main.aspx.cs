@@ -1,5 +1,4 @@
-﻿
-using Banca_En_Linea.Data;
+﻿using Banca_En_Linea.Data;
 using System;
 using System.Collections.Generic;
 using System.Data.Objects;
@@ -16,20 +15,17 @@ namespace Banca_En_Linea
             {
                 if (Session["DatosCliente"] != null)
                 {
-                    // Obtener la cédula desde la sesión y cargar los datos del usuario
+                    // Obtener la cédula desde la sesión y cargar los datos del usuario  
                     var datosCliente = (DatosCliente)Session["DatosCliente"];
                     CargarDatosUsuario(Convert.ToInt64(datosCliente.Cedula));
+                    // Llenar los campos del perfil en caso de no postback  
+                    LlenarCamposPerfil();
                 }
                 else
                 {
-                    // Redirigir al login si no hay datos en la sesión
+                    // Redirigir al login si no hay datos en la sesión  
                     Response.Redirect("Login.aspx");
                 }
-            }
-            else
-            {
-                // Llenar los campos del perfil en caso de postback
-                LlenarCamposPerfil();
             }
         }
 
@@ -168,9 +164,15 @@ namespace Banca_En_Linea
                     var datosCliente = (DatosCliente)Session["DatosCliente"];
                     long usuarioID = datosCliente.Cedula;
 
-                    // Verificar y cambiar contraseña
-                    if (VerificarContrasenaActual(usuarioID, txtContrasenaActual.Text.Trim()) &&
-                        CambiarContrasena(usuarioID, txtNuevaContrasena.Text.Trim()))
+                    // Verificar contraseña actual
+                    if (!VerificarContrasenaActual(usuarioID, txtContrasenaActual.Text.Trim()))
+                    {
+                        MostrarAlerta("La contraseña actual no es correcta.");
+                        return;
+                    }
+
+                    // Cambiar contraseña
+                    if (CambiarContrasena(usuarioID, txtNuevaContrasena.Text.Trim()))
                     {
                         MostrarAlerta("¡Contraseña cambiada exitosamente!");
                     }
@@ -265,11 +267,37 @@ namespace Banca_En_Linea
                 MostrarAlerta("La nueva contraseña debe tener al menos 6 caracteres.");
                 return false;
             }
+
+            if (!nuevaContrasena.Any(char.IsUpper))
+            {
+                MostrarAlerta("La nueva contraseña debe contener al menos una letra mayúscula.");
+                return false;
+            }
+
+            if (!nuevaContrasena.Any(char.IsLower))
+            {
+                MostrarAlerta("La nueva contraseña debe contener al menos una letra minúscula.");
+                return false;
+            }
+
+            if (!nuevaContrasena.Any(char.IsDigit))
+            {
+                MostrarAlerta("La nueva contraseña debe contener al menos un número.");
+                return false;
+            }
+
+            if (!nuevaContrasena.Any(ch => !char.IsLetterOrDigit(ch)))
+            {
+                MostrarAlerta("La nueva contraseña debe contener al menos un símbolo.");
+                return false;
+            }
+
             if (nuevaContrasena != confirmarContrasena)
             {
                 MostrarAlerta("La nueva contraseña y la confirmación no coinciden.");
                 return false;
             }
+
             return true;
         }
 
